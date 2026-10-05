@@ -1,0 +1,5 @@
+D:/repos/Derevo/out/build/x64-debug/CMakeFiles/edit_cache.dir
+D:/repos/Derevo/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
+D:/repos/Derevo/out/build/x64-debug/Derevo/CMakeFiles/Derevo.dir
+D:/repos/Derevo/out/build/x64-debug/Derevo/CMakeFiles/edit_cache.dir
+D:/repos/Derevo/out/build/x64-debug/Derevo/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/repos/Derevo/out/build/x64-debug/cmake_install.cmake",
+		"D:/repos/Derevo/out/build/x64-debug/Derevo/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
