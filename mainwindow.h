@@ -2,8 +2,7 @@
 
 #include <QMainWindow>
 #include<string>
-#include<iostream>
-//#include "QDebug"
+//#include<iostream>
 #include <QTimer>
 
 QT_BEGIN_NAMESPACE
@@ -21,6 +20,7 @@ public:
     ~MainWindow();
 
 private slots:
+    void applyTheme(int);
     void initTable();
     void setTable();
     void stepTick();
@@ -34,6 +34,8 @@ private slots:
     void on_xSize_editingFinished();
 
     void on_ySize_editingFinished();
+
+    void on_uiCombo_currentIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;
