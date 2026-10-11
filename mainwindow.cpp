@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-using namespace std;
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -31,12 +29,6 @@ void MainWindow::initTable(){
     ui->table->setFocusPolicy(Qt::NoFocus);
     //ui->table->setSelectionMode(QAbstractItemView::NoSelection);
 
-    ui->table->setStyleSheet(
-        "QTableWidget {"
-        "background-color: lightblue;"
-        "}"
-    );//ui->tableWidget->item(1, 2)->setBackground(QColor("#ADD8E6"));
-
     const int size = this->size().width()/200;
 
     ui->table->verticalHeader()->setMinimumSectionSize(1);//
@@ -47,21 +39,48 @@ void MainWindow::initTable(){
     ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     ui->table->horizontalHeader()->setDefaultSectionSize(size);
     setTable();
+    renderMap();
 }
 
 void MainWindow::setTable(){
     ui->table->setColumnCount(x);
     ui->table->setRowCount(y);
 
-    const int w = x * 5 + 2 * ui->table->frameWidth();
-    const int h = y * 5 + 2 * ui->table->frameWidth();
+    const int w = 0.7 * this->width();
+    const int h = 0.7 * this->height();
 
-    ui->table->setFixedSize(w, h);
+    ui->table->setFixedSize(w,h);
+}
+
+void MainWindow::renderMap(){
+    ui->table->setStyleSheet(
+        "QTableWidget {"
+        "background-color: lightblue;"
+        "}"
+    );
+    for (int i = 0; i < matrix.size(); ++i) {
+        for (int j = 0; j < matrix[0].size(); ++j) {
+            if (!ui->table->item(i, j)) ui->table->setItem(i, j, new QTableWidgetItem());
+
+            ui->table->item(i, j)->setText(QString::number(matrix[i][j]));
+            switch(matrix[i][j])
+            {
+            case 0:
+                break;
+            case 1:
+                ui->table->item(i, j)->setBackground(QColor("#00FF00"));
+                break;
+            default:
+                cout << "Unexpected number (rendering map): " << QString::number(matrix[i][j]).toStdString() << endl;
+                break;
+            }
+        }
+    }
 }
 
 void MainWindow::stepTick(){
-    qDebug() << "updated";
     ui->tickCount->setText(QString::number(ui->tickCount->text().toInt() + 1));
+    renderMap();
 }
 
 MainWindow::~MainWindow() {
@@ -100,8 +119,9 @@ void MainWindow::on_tickCount_editingFinished()
     int t = ui->tickCount->text().toInt(&ok);
     if (t <= 1 || !ok || t > 512){
         ui->tickCount->setText(0);
-        qDebug() << "You must give a nuumber in this field, that is greater, or equals to 0. Your number: " + t << "\n";
+        cout << "You must give a nuumber in this field, that is greater, or equals to 0. Your number: " + t << endl;
     }
+    tick = t;
 }
 
 
