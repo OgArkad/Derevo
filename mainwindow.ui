@@ -134,12 +134,9 @@
     <item row="9" column="1">
      <widget class="QLabel" name="uiTypeLabel">
       <property name="text">
-       <string>UI type:</string>
+       <string>UI style:</string>
       </property>
      </widget>
-    </item>
-    <item row="0" column="0" rowspan="11">
-     <widget class="QTableWidget" name="table"/>
     </item>
     <item row="3" column="1">
      <widget class="QLabel" name="tick">
@@ -150,6 +147,9 @@
     </item>
     <item row="6" column="3">
      <widget class="QSpinBox" name="ySize"/>
+    </item>
+    <item row="0" column="0" rowspan="11">
+     <widget class="QTableWidget" name="table"/>
     </item>
    </layout>
   </widget>

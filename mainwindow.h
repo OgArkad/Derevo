@@ -2,8 +2,16 @@
 
 #include <QMainWindow>
 #include<string>
-//#include<iostream>
 #include <QTimer>
+
+#include <iostream>
+#include <vector>
+#include <ctime>   // Добавлено для time(NULL)
+#include <cstdint>
+
+using namespace std;
+
+extern vector<vector<int8_t>> matrix;//valamiért itt kell deklarálni
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,7 +27,12 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    int x = 128;
+    int y = 64;
+    int tick = 100;
+
 private slots:
+    void renderMap();
     void applyTheme(int);
     void initTable();
     void setTable();
@@ -40,7 +53,5 @@ private slots:
 private:
     Ui::MainWindow *ui;
     bool playing = false;
-    int x = 128;
-    int y = 64;
     QTimer *timer;
 };
