@@ -93,7 +93,10 @@ int main(int argc, char *argv[])
     }
 
     grow(tree1);
+    w.trees++;
+
     die(tree1);
+    w.trees--;
 
     return a.exec();
 }

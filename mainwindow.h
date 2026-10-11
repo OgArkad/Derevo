@@ -30,6 +30,7 @@ public:
     int x = 128;
     int y = 64;
     int tick = 100;
+    int trees = 0;
 
 private slots:
     void renderMap();

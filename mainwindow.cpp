@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ySize->setMinimum(3);
     initTable();
     timer = new QTimer(this);
-    //ui->treeNumber->display(10);
 
     connect(timer, &QTimer::timeout, this, &MainWindow::stepTick);
 }
@@ -68,7 +67,7 @@ void MainWindow::renderMap(){
             case 0:
                 break;
             case 1:
-                ui->table->item(i, j)->setBackground(QColor("#00FF00"));
+                ui->table->item(i, j)->setBackground(QColor("#26ad00"));
                 break;
             default:
                 cout << "Unexpected number (rendering map): " << QString::number(matrix[i][j]).toStdString() << endl;
@@ -80,6 +79,7 @@ void MainWindow::renderMap(){
 
 void MainWindow::stepTick(){
     ui->tickCount->setText(QString::number(ui->tickCount->text().toInt() + 1));
+    ui->treeNumber->display(trees);
     renderMap();
 }
 
