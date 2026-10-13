@@ -1,13 +1,15 @@
 #pragma once
 
 #include <QMainWindow>
-#include<string>
+#include <string>
 #include <QTimer>
 
 #include <iostream>
 #include <vector>
-#include <ctime>   // Добавлено для time(NULL)
-#include <cstdint>
+
+#include "render.h"
+
+class QTableWidgetItem;
 
 using namespace std;
 
@@ -33,13 +35,10 @@ public:
     int trees = 0;
 
 private slots:
-    void renderMap();
-    void applyTheme(int);
-    void initTable();
-    void setTable();
     void stepTick();
 
     void on_tickCount_editingFinished();
+    void resizeEvent(QResizeEvent* event);
 
     void on_start_clicked();
 
@@ -51,8 +50,13 @@ private slots:
 
     void on_uiCombo_currentIndexChanged(int index);
 
+    void on_HideButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    Render * renderer = nullptr;
     bool playing = false;
+    bool sidebar = true;
+    int8_t theme = 0;
     QTimer *timer;
 };

@@ -1,4 +1,6 @@
 #include <QApplication>
+#include <ctime>   // Добавлено для time(NULL)
+#include <cstdint>
 #include "mainwindow.h"
 
 int tick;

@@ -6,6 +6,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    renderer = new Render(ui->table, this);
+
     ui->xSize->setMaximum(256);
     ui->xSize->setValue(128);
     ui->xSize->setMinimum(3);
@@ -13,91 +16,45 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ySize->setMaximum(128);
     ui->ySize->setValue(64);
     ui->ySize->setMinimum(3);
-    initTable();
+    renderer->initTable(x, y, theme);
+
+    this->adjustSize();
+
     timer = new QTimer(this);
 
     connect(timer, &QTimer::timeout, this, &MainWindow::stepTick);
 }
 
-void MainWindow::initTable(){
-    ui->table->horizontalHeader()->hide();
-    ui->table->verticalHeader()->hide();
-
-    ui->table->setShowGrid(false);
-    ui->table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->table->setFocusPolicy(Qt::NoFocus);
-    //ui->table->setSelectionMode(QAbstractItemView::NoSelection);
-
-    const int size = this->size().width()/200;
-
-    ui->table->verticalHeader()->setMinimumSectionSize(1);//
-    ui->table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-    ui->table->verticalHeader()->setDefaultSectionSize(size);
-
-    ui->table->horizontalHeader()->setMinimumSectionSize(1);//
-    ui->table->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-    ui->table->horizontalHeader()->setDefaultSectionSize(size);
-    setTable();
-    renderMap();
-}
-
-void MainWindow::setTable(){
-    ui->table->setColumnCount(x);
-    ui->table->setRowCount(y);
-
-    const int w = 0.7 * this->width();
-    const int h = 0.7 * this->height();
-
-    ui->table->setFixedSize(w,h);
-}
-
-void MainWindow::renderMap(){
-    ui->table->setStyleSheet(
-        "QTableWidget {"
-        "background-color: lightblue;"
-        "}"
-    );
-    for (int i = 0; i < matrix.size(); ++i) {
-        for (int j = 0; j < matrix[0].size(); ++j) {
-            if (!ui->table->item(i, j)) ui->table->setItem(i, j, new QTableWidgetItem());
-
-            ui->table->item(i, j)->setText(QString::number(matrix[i][j]));
-            switch(matrix[i][j])
-            {
-            case 0:
-                break;
-            case 1:
-                ui->table->item(i, j)->setBackground(QColor("#26ad00"));
-                break;
-            default:
-                cout << "Unexpected number (rendering map): " << QString::number(matrix[i][j]).toStdString() << endl;
-                break;
-            }
-        }
-    }
-}
 
 void MainWindow::stepTick(){
     ui->tickCount->setText(QString::number(ui->tickCount->text().toInt() + 1));
     ui->treeNumber->display(trees);
-    renderMap();
+    renderer->renderMap(x, y, theme, matrix);
 }
+
 
 MainWindow::~MainWindow() {
     delete ui;
 }
+
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+    if (!QGuiApplication::platformName().contains("wayland"))
+        this->adjustSize();
+}
+
 
 void MainWindow::on_start_clicked()
 {
     playing = true;
     timer->start(250);
 
-    QPalette pal = ui->start->palette();
-    pal.setColor(QPalette::Button, QColor(Qt::blue));
-    ui->start->setAutoFillBackground(true);
-    ui->start->setPalette(pal);
-    ui->start->update();
-
+    ui->start->setAutoFillBackground(true);//works on windows
+    QPalette palette = ui->start->palette();
+    palette.setColor(QPalette::Window, QColor(Qt::blue));
+    ui->start->setPalette(palette);
+    ui->start->show();
 }
 
 
@@ -105,11 +62,12 @@ void MainWindow::on_stop_clicked()
 {
     playing = false;
     timer->stop();
-    QPalette pal = ui->start->palette();//to be continued...
-    pal.setColor(QPalette::Button, QColor(Qt::black));
+
     ui->start->setAutoFillBackground(true);
-    ui->start->setPalette(pal);
-    ui->start->update();
+    QPalette palette = ui->start->palette();
+    palette.setColor(QPalette::Window, QColor(Qt::black));
+    ui->start->setPalette(palette);
+    ui->start->show();
 }
 
 
@@ -128,55 +86,38 @@ void MainWindow::on_tickCount_editingFinished()
 void MainWindow::on_xSize_editingFinished()
 {
     x = ui->xSize->value();
-    setTable();
+    renderer->setTable(x, y, theme);
+    if (matrix.size() != x)
+        matrix.assign(y, vector<int8_t>(x, 0));
 }
 
 
 void MainWindow::on_ySize_editingFinished()
 {
     y = ui->ySize->value();
-    setTable();
+    renderer->setTable(x, y, theme);
+    if (matrix.size() > 0 && matrix[0].size() != y)
+        matrix.assign(y, vector<int8_t>(x, 0));
 }
 
 
 void MainWindow::on_uiCombo_currentIndexChanged(int index)
 {
-    applyTheme(index);
+    theme = index;
+    renderer->renderMap(x, y, theme, matrix);
 }
 
-void MainWindow::applyTheme(int i){
-    switch(i){
-    case 0://normal
-        ui->table->setStyleSheet(
-            "QTableWidget {"
-            "background-color: lightblue;"
-            "}"
-            );
-        break;
-    case 1://values
-        ui->table->setStyleSheet(
-            "QTableWidget {"
-            "background-color: black;"
-            "color: white;"
-            "}"
-            );
-        break;
-    case 2://monochrome
-        ui->table->setStyleSheet(
-            "QTableWidget {"
-            "background-color: white;"
-            "}"
-            );
-        break;
-    case 3://debug
-        ui->table->setStyleSheet(
-            "QTableWidget {"
-            "background-color: darkgrey;"
-            "}"
-            );
-        break;
-    default:
-        break;
+void MainWindow::on_HideButton_clicked()
+{
+    if (sidebar){
+        ui->frame->hide();
+        ui->HideButton->setText("<");
     }
+    else{
+        ui->frame->show();
+        ui->HideButton->setText(">");
+    }
+    sidebar = !sidebar;
+    if (!QGuiApplication::platformName().contains("wayland"))
+        this->adjustSize();
 }
-
