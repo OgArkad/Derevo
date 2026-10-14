@@ -18,7 +18,7 @@ void Render::initTable(int x, int y, int8_t theme){
     //table->setSelectionMode(QAbstractItemView::NoSelection);
 
 
-    const int size = w->size().width()/100;
+    const int size = w->size().width()/150;
 
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     table->verticalHeader()->setMinimumSectionSize(size);
@@ -47,13 +47,11 @@ void Render::setTable(int x, int y, int8_t theme){
     table->setFixedSize(0.7 * w->width(), 0.7 * w->width());
 }
 
-
-
 void Render::renderMap(int x, int y, int8_t theme, vector<vector<int8_t>> matrix){
 
     table->setStyleSheet("");
-    for (int i = 0; i < x; ++i) {
-        for (int j = 0; j < y; ++j) {
+    for (int i = 0; i < x; i++) {
+        for (int j = 0; j < y; j++) {
             if (!table->item(i, j))
                 table->setItem(i, j, new QTableWidgetItem());
             if (i < matrix.size() && matrix.size() >= 1 && matrix[0].size() > j)
@@ -65,8 +63,9 @@ void Render::renderMap(int x, int y, int8_t theme, vector<vector<int8_t>> matrix
 }
 
 void Render::applyTheme(QTableWidgetItem *item, int8_t val, int8_t theme){
-    if (item == NULL) return;
+    if (item == nullptr) return;
     item->setText(QString::number(val));
+    cout << val << " ";
     switch(theme){
     case 0://normal
         if (val == 0){

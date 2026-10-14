@@ -38,10 +38,12 @@ MainWindow::~MainWindow() {
 }
 
 
+#pragma region Event handlers
+
 void MainWindow::resizeEvent(QResizeEvent* event)
 {
-    if (!QGuiApplication::platformName().contains("wayland"))
-        this->adjustSize();
+    //if (!QGuiApplication::platformName().contains("wayland"))
+    //   this->adjustSize();
 }
 
 
@@ -87,8 +89,18 @@ void MainWindow::on_xSize_editingFinished()
 {
     x = ui->xSize->value();
     renderer->setTable(x, y, theme);
-    if (matrix.size() != x)
-        matrix.assign(y, vector<int8_t>(x, 0));
+    if (matrix.size() != x){
+        vector<vector<int8_t>> vec;
+        vec.assign(y, vector<int8_t>(x, 0));
+
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                if (i < matrix.size() && matrix.size() >= 1 && j < matrix[0].size())
+                    vec[i][j] = matrix[i][j];
+            }
+        }
+        matrix = vec;
+    }
 }
 
 
@@ -107,6 +119,7 @@ void MainWindow::on_uiCombo_currentIndexChanged(int index)
     renderer->renderMap(x, y, theme, matrix);
 }
 
+
 void MainWindow::on_HideButton_clicked()
 {
     if (sidebar){
@@ -121,3 +134,5 @@ void MainWindow::on_HideButton_clicked()
     if (!QGuiApplication::platformName().contains("wayland"))
         this->adjustSize();
 }
+
+#pragma endregion
