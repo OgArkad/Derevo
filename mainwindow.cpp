@@ -84,23 +84,26 @@ void MainWindow::on_tickCount_editingFinished()
     tick = t;
 }
 
+void MainWindow::resizeVectorMatrix(){
+    vector<vector<int8_t>> vec;
+    vec.assign(y, vector<int8_t>(x, 0));
+
+    for (int i = 0; i < y; i++) {
+        for (int j = 0; j < x; j++) {
+            if (i < matrix.size() && matrix.size() >= 1 && j < matrix[0].size())
+                vec[i][j] = matrix[i][j];
+        }
+    }
+    matrix = vec;
+}
+
 
 void MainWindow::on_xSize_editingFinished()
 {
     x = ui->xSize->value();
     renderer->setTable(x, y, theme);
-    if (matrix.size() != x){
-        vector<vector<int8_t>> vec;
-        vec.assign(y, vector<int8_t>(x, 0));
-
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                if (i < matrix.size() && matrix.size() >= 1 && j < matrix[0].size())
-                    vec[i][j] = matrix[i][j];
-            }
-        }
-        matrix = vec;
-    }
+    if (matrix.size() != x)
+        resizeVectorMatrix();
 }
 
 
@@ -109,7 +112,7 @@ void MainWindow::on_ySize_editingFinished()
     y = ui->ySize->value();
     renderer->setTable(x, y, theme);
     if (matrix.size() > 0 && matrix[0].size() != y)
-        matrix.assign(y, vector<int8_t>(x, 0));
+        resizeVectorMatrix();
 }
 
 

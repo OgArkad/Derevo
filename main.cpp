@@ -46,6 +46,7 @@ void die(TreeClass &tree){
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    matrix.assign(64, vector<int8_t>(128, 0));
     MainWindow w;
     w.show();
     tick = w.tick;
@@ -60,7 +61,6 @@ int main(int argc, char *argv[])
 
     int rows = 3;
     int cols = 4;
-    matrix.assign(y, vector<int8_t>(x, 0));
 
     for (size_t i = 0; i < y; i++)
     {

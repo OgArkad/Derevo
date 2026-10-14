@@ -1,11 +1,7 @@
 #pragma once
 
-#include <QMainWindow>
-#include <string>
 #include <QTimer>
-
-#include <iostream>
-#include <vector>
+#include <string>
 
 #include "render.h"
 
@@ -36,6 +32,7 @@ public:
 
 private slots:
     void stepTick();
+    void resizeVectorMatrix();
 
     void on_tickCount_editingFinished();
     void resizeEvent(QResizeEvent* event);
