@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    setWindowIcon(QIcon("ico.png"));
     ui->setupUi(this);
 
     renderer = new Render(ui->table, this);
@@ -25,11 +26,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout, this, &MainWindow::stepTick);
 }
 
-
+/*                                                        ********************************                                    */
 void MainWindow::stepTick(){
     ui->tickCount->setText(QString::number(ui->tickCount->text().toInt() + 1));
     ui->treeNumber->display(trees);
     renderer->renderMap(x, y, theme, matrix);
+    //TreeClass->tree1->grow();
 }
 
 

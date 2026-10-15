@@ -19,10 +19,10 @@ void Render::initTable(int x, int y, int8_t theme){
 
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     table->setFocusPolicy(Qt::NoFocus);
-    //table->setSelectionMode(QAbstractItemView::NoSelection);
+    table->setSelectionMode(QAbstractItemView::NoSelection);
 
 
-    const int size = w->size().width()/100;
+    const int size = w->size().width()/135;
 
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     table->verticalHeader()->setMinimumSectionSize(size);
@@ -64,8 +64,8 @@ void Render::renderMap(int x, int y, int8_t theme, const vector<vector<int8_t>>&
             if (!table->item(i, j))
                 table->setItem(i, j, new QTableWidgetItem());
             if (i < matrix.size() && matrix.size() >= 1 && matrix[0].size() > j){
-                applyTheme(table->item(i, j), matrix[i][j], theme);//still got a huge problem, this never runs
-                //cout << "k" << endl;
+                applyTheme(table->item(i, j), matrix[i][j], theme);
+                //cout << "k.: " << QString::number(matrix[i][j]).toStdString() << endl;
             }
             else{
                 applyTheme(table->item(i, j), 0, theme);

@@ -4,6 +4,7 @@
 #include <string>
 
 #include "render.h"
+#include "main.h"
 
 class QTableWidgetItem;
 

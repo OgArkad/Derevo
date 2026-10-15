@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 qt_standard_project_setup()
 
 qt_add_executable(Derevo
@@ -15,10 +16,13 @@ qt_add_executable(Derevo
     mainwindow.h
     mainwindow.ui
     render.h render.cpp
+    main.h
+
 
 )
 
 target_link_libraries(Derevo PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Derevo PRIVATE Qt6::Widgets)
 target_link_libraries(Derevo PRIVATE Qt6::Widgets)
 
 set_target_properties(Derevo PROPERTIES
