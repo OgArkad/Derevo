@@ -6,27 +6,23 @@ int y;
 
 vector<vector<int8_t>> matrix;
 
-    void TreeClass::grow() {
-        if (this->height != this->currentHeight)
-        {
-            this->currentHeight++;
-        }
-        this->currentAge++;
+void TreeClass::grow() {
+    if (this->height != this->currentHeight)
+    {
+        this->currentHeight++;
     }
+    this->currentAge++;
+}
 
-    void TreeClass::die(){
-        for (size_t i = 0; i < matrix.size(); i++)
+void TreeClass::die(){
+    for (size_t i = 0; i < matrix.size(); i++)
+    {
+        for (size_t z = 0; z < matrix[i].size(); z++)
         {
-            for (size_t z = 0; z < matrix[i].size(); z++)
-            {
-                if (matrix[i][z] == 1)
-                {
-                    matrix[i][z] = 0;
-                }
-            }
+            if (matrix[i][z] == 1) matrix[i][z] = 0;
         }
     }
-
+}
 
 
 int main(int argc, char *argv[])
@@ -57,8 +53,6 @@ int main(int argc, char *argv[])
         cout << "\n";
     }*/
 
-    cout << "\nDone" << endl;
-
     srand(time(NULL));
     for (size_t i = 0; i < 5; i++)
     {
@@ -81,10 +75,12 @@ int main(int argc, char *argv[])
     }*/
 
     tree1.grow();
-    w.trees++;
+    w.tick++;
+    cout << tree1.age << endl;
+    w.trees += 5;
 
     //tree1.die();
-    //w.trees--;
+    //w.trees = 0;
 
     return a.exec();
 }

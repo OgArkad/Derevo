@@ -5,7 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    setWindowIcon(QIcon("ico.png"));
+    setWindowIcon(QIcon("./appicon.ico"));//fél siker
     ui->setupUi(this);
 
     renderer = new Render(ui->table, this);
@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 /*                                                        ********************************                                    */
 void MainWindow::stepTick(){
-    ui->tickCount->setText(QString::number(ui->tickCount->text().toInt() + 1));
+    ui->tickCount->setText(QString::number(tick));
     ui->treeNumber->display(trees);
     renderer->renderMap(x, y, theme, matrix);
     //TreeClass->tree1->grow();
@@ -79,7 +79,7 @@ void MainWindow::on_tickCount_editingFinished()
 {
     bool ok;
     int t = ui->tickCount->text().toInt(&ok);
-    if (t <= 1 || !ok || t > 512){
+    if (t < 0 || !ok){
         ui->tickCount->setText(0);
         cout << "You must give a nuumber in this field, that is greater, or equals to 0. Your number: " + t << endl;
     }

@@ -69,7 +69,7 @@ void Render::renderMap(int x, int y, int8_t theme, const vector<vector<int8_t>>&
             }
             else{
                 applyTheme(table->item(i, j), 0, theme);
-                //cout << "unsiccesful" << endl;
+                //cout << "unsuccesful" << endl;
             }
         }
     }
@@ -78,41 +78,48 @@ void Render::renderMap(int x, int y, int8_t theme, const vector<vector<int8_t>>&
 void Render::applyTheme(QTableWidgetItem *item, int8_t val, int8_t theme){
     if (item == nullptr) return;
     item->setText(QString::number(val));
-    cout << val << " ";
     switch(theme){
     case 0://normal
         if (val == 0){
-            item->setBackground(QBrush(QColor("lightblue")));
-            item->setForeground(QBrush(QColor("lightblue")));
+            item->setBackground(QBrush(QColor("#71d1f1")));
+            item->setForeground(QBrush(QColor("#71d1f1")));
         }else{
-            item->setBackground(QBrush(QColor("green")));
-            item->setForeground(QBrush(QColor("green")));
+            item->setBackground(QBrush(QColor("#00d800")));
+            item->setForeground(QBrush(QColor("#00d800")));
         }
         break;
     case 1://values
         if (val == 0){
-            item->setBackground(QBrush(QColor("black")));
-            item->setForeground(QBrush(QColor("white")));
+            item->setBackground(QBrush(QColor("#000000")));
+            item->setForeground(QBrush(QColor("#FFFFFF")));
         }else{
-            item->setBackground(QBrush(QColor("white")));
-            item->setForeground(QBrush(QColor("black")));
+            item->setBackground(QBrush(QColor("#FFFFFF")));
+            item->setForeground(QBrush(QColor("#000000")));
         }
         break;
-    case 2://monochrome
+    case 2://night
         if (val == 0){
-            item->setBackground(QBrush(QColor("white")));
-            item->setForeground(QBrush(QColor("white")));
+            item->setBackground(QBrush(QColor("#00008b")));
+            item->setForeground(QBrush(QColor("#00008b")));
         }else{
-            item->setBackground(QBrush(QColor("black")));
-            item->setForeground(QBrush(QColor("black")));
+            item->setBackground(QBrush(QColor("#013220")));
+            item->setForeground(QBrush(QColor("#013220")));
         }
         break;
-    case 3://debug
-        item->setBackground(QBrush(QColor("darkgray")));
-        item->setForeground(QBrush(QColor("red")));
+    case 3://monochrome
+        if (val == 0){
+            item->setBackground(QBrush(QColor("#FFFFFF")));
+            item->setForeground(QBrush(QColor("#FFFFFF")));
+        }else{
+            item->setBackground(QBrush(QColor("#000000")));
+            item->setForeground(QBrush(QColor("#000000")));
+        }
+        break;
+    case 4://debug
+        item->setBackground(QBrush(QColor("#999999")));
+        item->setForeground(QBrush(QColor("#FF0000")));
         break;
     default:
-        cout << "Unexpected theme:" << theme << endl;
-        break;
+        throw new range_error("Unexpected theme: " + theme);
     }
 }
