@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QTimer>
-#include <string>
+//#include <string>
 
 #include "render.h"
 #include "main.h"

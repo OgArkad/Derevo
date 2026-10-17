@@ -3,11 +3,11 @@
 
 #include <QMainWindow>
 #include <QWidget>
-#include <QFrame>
+//#include <QFrame>
 #include <QFont>
 #include <QTableWidget>
 #include <iostream>
-#include <vector>
+//#include <vector>
 
 using namespace std;
 

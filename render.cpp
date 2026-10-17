@@ -16,7 +16,6 @@ void Render::initTable(int x, int y, int8_t theme){
     table->setMidLineWidth(0);
 
 
-
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     table->setFocusPolicy(Qt::NoFocus);
     table->setSelectionMode(QAbstractItemView::NoSelection);
@@ -42,14 +41,12 @@ void Render::initTable(int x, int y, int8_t theme){
 }
 
 void Render::setTable(int x, int y, int8_t theme){
-
     table->setColumnCount(x);
     table->setRowCount(y);
 
     for (int i = 0; i < y; ++i) {
         for (int j = 0; j < x; ++j) {
-            if (!table->item(i, j))
-                table->setItem(i, j, new QTableWidgetItem());
+            if (!table->item(i, j)) table->setItem(i, j, new QTableWidgetItem());
             this->applyTheme(table->item(i, j), 0, theme);
         }
     }
@@ -61,16 +58,9 @@ void Render::renderMap(int x, int y, int8_t theme, const vector<vector<int8_t>>&
     cout << QString::number(matrix.size()).toStdString() << endl;
     for (int i = 0; i < y; i++) {
         for (int j = 0; j < x; j++) {
-            if (!table->item(i, j))
-                table->setItem(i, j, new QTableWidgetItem());
-            if (i < matrix.size() && matrix.size() >= 1 && matrix[0].size() > j){
-                applyTheme(table->item(i, j), matrix[i][j], theme);
-                //cout << "k.: " << QString::number(matrix[i][j]).toStdString() << endl;
-            }
-            else{
-                applyTheme(table->item(i, j), 0, theme);
-                //cout << "unsuccesful" << endl;
-            }
+            if (!table->item(i, j)) table->setItem(i, j, new QTableWidgetItem());
+            if (i < matrix.size() && matrix.size() >= 1 && matrix[0].size() > j) applyTheme(table->item(i, j), matrix[i][j], theme);
+            else applyTheme(table->item(i, j), 0, theme);
         }
     }
 }
