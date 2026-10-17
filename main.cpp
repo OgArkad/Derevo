@@ -1,6 +1,6 @@
 #include <iostream>
+#include "main.h"
 
-<<<<<<< HEAD
 int main() {
     int x = 5;
     --x; // Decrement x by 1
@@ -8,50 +8,39 @@ int main() {
     
     return 0;
 }
-=======
 int tick;
 int x;
 int y;
 
 vector<vector<int8_t>> matrix;
 
-class TreeClass {
-public:
-    string colorHexCode;
-    int height = 0;
-    int width = 0;
-    int currentHeight = 0;
-    int roots = 0;
-    int energy = 0;
-    int age = 0;
-    int currentAge = 0;
-};
-
-void grow(TreeClass &tree) {
-    if (tree.height != tree.currentHeight)
-    {
-        tree.currentHeight++;
-    }
-    tree.currentAge++;
-}
-
-void die(TreeClass &tree){
-    for (size_t i = 0; i < matrix.size(); i++)
-    {
-        for (size_t z = 0; z < matrix[i].size(); z++)
+    void TreeClass::grow() {
+        if (this->height != this->currentHeight)
         {
-            if (matrix[i][z] == 1)
+            this->currentHeight++;
+        }
+        this->currentAge++;
+    }
+
+    void TreeClass::die(){
+        for (size_t i = 0; i < matrix.size(); i++)
+        {
+            for (size_t z = 0; z < matrix[i].size(); z++)
             {
-                matrix[i][z] = 0;
+                if (matrix[i][z] == 1)
+                {
+                    matrix[i][z] = 0;
+                }
             }
         }
     }
-}
+
 
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    matrix.assign(64, vector<int8_t>(128, 0));
     MainWindow w;
     w.show();
     tick = w.tick;
@@ -66,16 +55,15 @@ int main(int argc, char *argv[])
 
     int rows = 3;
     int cols = 4;
-    matrix.assign(y, vector<int8_t>(x, 0));
 
-    for (size_t i = 0; i < y; i++)
+    /*for (size_t i = 0; i < y; i++)
     {
         for (size_t z = 0; z < x; z++)
         {
             cout << to_string(matrix[i][z]);
         }
         cout << "\n";
-    }
+    }*/
 
     cout << "\nDone" << endl;
 
@@ -91,18 +79,20 @@ int main(int argc, char *argv[])
     }
     cout << "\n";
 
-    for (size_t i = 0; i < y; i++)
+    /*for (size_t i = 0; i < y; i++)
     {
         for (size_t z = 0; z < x; z++)
         {
             cout << to_string(matrix[i][z]);
         }
          cout << "\n";
-    }
+    }*/
 
-    grow(tree1);
-    die(tree1);
+    tree1.grow();
+    w.trees++;
+
+    //tree1.die();
+    //w.trees--;
 
     return a.exec();
 }
->>>>>>> a4727cd873bb270994c3c20201efbf67697d3e83
