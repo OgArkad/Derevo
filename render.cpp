@@ -1,6 +1,6 @@
 #include "render.h"
 #include "ui_mainwindow.h"
-
+//not main!
 Render::Render(QTableWidget *table, QMainWindow *wt): table(table), w(wt) {
 }//mainWindow: width, height
 
@@ -21,7 +21,7 @@ void Render::initTable(int x, int y, int8_t theme){
     table->setSelectionMode(QAbstractItemView::NoSelection);
 
 
-    const int size = w->size().width()/135;
+    const int size = (w->size().width()/x) * 0.9999;
 
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     table->verticalHeader()->setMinimumSectionSize(size);
