@@ -32,6 +32,8 @@ void Render::initTable(int x, int y, int8_t theme){
     table->horizontalHeader()->setMinimumSectionSize(size);
     table->horizontalHeader()->setDefaultSectionSize(size);
 
+    table->resize(x* size, y* size);
+
     QFont font("monospace");
     font.setStyleHint(QFont::Monospace);
     font.setPixelSize(size * 0.85);
@@ -55,7 +57,6 @@ void Render::setTable(int x, int y, int8_t theme){
 }
 
 void Render::renderMap(int x, int y, int8_t theme, const vector<vector<int8_t>>& matrix){
-    cout << QString::number(matrix.size()).toStdString() << endl;
     for (int i = 0; i < y; i++) {
         for (int j = 0; j < x; j++) {
             if (!table->item(i, j)) table->setItem(i, j, new QTableWidgetItem());

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QTimer>
+#include <QIcon>
 //#include <string>
 
 #include "render.h"

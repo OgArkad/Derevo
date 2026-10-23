@@ -44,15 +44,6 @@ int main(int argc, char *argv[])
     int rows = 3;
     int cols = 4;
 
-    /*for (size_t i = 0; i < y; i++)
-    {
-        for (size_t z = 0; z < x; z++)
-        {
-            cout << to_string(matrix[i][z]);
-        }
-        cout << "\n";
-    }*/
-
     srand(time(NULL));
     for (size_t i = 0; i < 5; i++)
     {
@@ -64,15 +55,6 @@ int main(int argc, char *argv[])
         }
     }
     cout << "\n";
-
-    /*for (size_t i = 0; i < y; i++)
-    {
-        for (size_t z = 0; z < x; z++)
-        {
-            cout << to_string(matrix[i][z]);
-        }
-         cout << "\n";
-    }*/
 
     tree1.grow();
     w.tick++;
