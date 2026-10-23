@@ -35,31 +35,35 @@ int main(int argc, char *argv[])
     x = w.x;
     y = w.y;
 
+    vector<TreeClass> trees(5);
 
-    TreeClass tree1;
-    tree1.colorHexCode = "#239212";
-    tree1.height = 8;
-    tree1.width = 4;
-
+    for (int i = 0; i < trees.size(); i++)
+    {
+        trees[i].height = 8;
+        trees[i].width = 4;
+    }
     int rows = 3;
     int cols = 4;
 
     srand(time(NULL));
-    for (size_t i = 0; i < 5; i++)
+    int randomNum;
+    for (size_t i = 0; i < trees.size(); i++)
     {
-        int randomNum = rand() % 125;
+        int t =  rand() % x;
+        while(t == randomNum) t = rand() % x;
+        randomNum = t-1;
         cout << randomNum << " ";
-        for (size_t i = 0; i < 64; i++)
-        {
-            matrix[i][randomNum] = 1;
-        }
+        trees[i].root = tuple(y - 1, randomNum);
+        matrix[y - 1][randomNum] = 1;
     }
-    cout << "\n";
+    cout << endl;
+    w.trees += trees.size();
 
-    tree1.grow();
+    for (int i = 0; i < trees.size(); i++)
+    {
+        trees[i].grow();
+    }
     w.tick++;
-    cout << tree1.age << endl;
-    w.trees += 5;
 
     //tree1.die();
     //w.trees = 0;
