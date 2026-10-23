@@ -1,41 +1,48 @@
 #include "main.h"
+#include "mainwindow.h" //piszkosul circular-dependency
 
-int tick;
-int x;
-int y;
+vector<vector<int8_t>> matrix(64, vector<int8_t>(128, 0));
 
-vector<vector<int8_t>> matrix;
+namespace Tree{
+    int tick;
+    int x;
+    int y;
 
-void TreeClass::grow() {
-    if (this->height != this->currentHeight)
-    {
-        this->currentHeight++;
-    }
-    this->currentAge++;
-}
-
-void TreeClass::die(){
-    for (size_t i = 0; i < matrix.size(); i++)
-    {
-        for (size_t z = 0; z < matrix[i].size(); z++)
+    void TreeClass::grow() {
+        if (this->height != this->currentHeight)
         {
-            if (matrix[i][z] == 1) matrix[i][z] = 0;
+            this->currentHeight++;
+            if (get<1>(this->root) > 0)
+                get<1>(this->root)--;
+            matrix[get<1>(this->root)][get<0>(this->root)] = 1;
+        }
+        this->currentAge++;
+        cout << "grown" << get<1>(this->root) << endl;
+    }
+
+    void TreeClass::die(){
+        for (size_t i = 0; i < matrix.size(); i++)
+        {
+            for (size_t z = 0; z < matrix[i].size(); z++)
+            {
+                if (matrix[i][z] == 1) matrix[i][z] = 0;
+            }
         }
     }
+
 }
 
+using namespace Tree;
+vector<TreeClass> trees(5);
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    matrix.assign(64, vector<int8_t>(128, 0));
+    QApplication a(argc, argv);//Shift + Tab => remove 1 tab to the left
     MainWindow w;
     w.show();
     tick = w.tick;
     x = w.x;
     y = w.y;
-
-    vector<TreeClass> trees(5);
 
     for (int i = 0; i < trees.size(); i++)
     {
@@ -50,14 +57,11 @@ int main(int argc, char *argv[])
     for (size_t i = 0; i < trees.size(); i++)
     {
         int t =  rand() % x;
-        while(t == randomNum) t = rand() % x;
-        randomNum = t-1;
-        cout << randomNum << " ";
-        trees[i].root = tuple(y - 1, randomNum);
+        while(t == randomNum) t = rand() % (x-1);
+        randomNum = t;
+        trees[i].root = tuple(randomNum, y - 1);
         matrix[y - 1][randomNum] = 1;
     }
-    cout << endl;
-    w.trees += trees.size();
 
     for (int i = 0; i < trees.size(); i++)
     {
@@ -70,3 +74,4 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
+

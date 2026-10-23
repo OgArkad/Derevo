@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QWidget>
-//#include <QFrame>
 #include <QFont>
 #include <QTableWidget>
 #include <iostream>

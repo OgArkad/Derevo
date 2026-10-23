@@ -1,6 +1,6 @@
 #include "render.h"
 #include "ui_mainwindow.h"
-//not main!
+
 Render::Render(QTableWidget *table, QMainWindow *wt): table(table), w(wt) {
 }//mainWindow: width, height
 

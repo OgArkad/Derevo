@@ -29,9 +29,12 @@ MainWindow::MainWindow(QWidget *parent)
 /*                                                        ********************************                                    */
 void MainWindow::stepTick(){
     ui->tickCount->setText(QString::number(tick));
-    ui->treeNumber->display(trees);
+    ui->treeNumber->display((int)trees.size());//crazy convertálás...
+    for (int i = 0; i < trees.size(); ++i) {
+        trees[i].grow();
+    }
     renderer->renderMap(x, y, theme, matrix);
-    //TreeClass->tree1->grow();
+    tick++;
 }
 
 
@@ -41,12 +44,6 @@ MainWindow::~MainWindow() {
 
 
 #pragma region Event handlers
-
-void MainWindow::resizeEvent(QResizeEvent* event)
-{
-    //if (!QGuiApplication::platformName().contains("wayland"))
-    //   this->adjustSize();
-}
 
 
 void MainWindow::on_start_clicked()

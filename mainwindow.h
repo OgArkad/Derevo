@@ -2,16 +2,17 @@
 
 #include <QTimer>
 #include <QIcon>
-//#include <string>
 
 #include "render.h"
-#include "main.h"
+#include "main.h"//piszkosul circular-dependency
 
 class QTableWidgetItem;
 
 using namespace std;
 
 extern vector<vector<int8_t>> matrix;//valamiért itt kell deklarálni
+extern vector<Tree::TreeClass> trees;
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,25 +31,16 @@ public:
     int x = 128;
     int y = 64;
     int tick = 0;
-    int trees = 0;
 
 private slots:
     void stepTick();
     void resizeVectorMatrix();
-
     void on_tickCount_editingFinished();
-    void resizeEvent(QResizeEvent* event);
-
     void on_start_clicked();
-
     void on_stop_clicked();
-
     void on_xSize_editingFinished();
-
     void on_ySize_editingFinished();
-
     void on_uiCombo_currentIndexChanged(int index);
-
     void on_HideButton_clicked();
 
 private:

@@ -3,6 +3,7 @@
 learnCPP.excalidraw
 *.vs
 *.vscode
+.vscode/
 
 *~
 *.autosave
