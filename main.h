@@ -1,30 +1,28 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <QMainWindow>
+#include <QWidget>
 #include <QApplication>
-#include <ctime>   // Добавлено для time(NULL)
-#include <cstdint>
-#include "mainwindow.h"
+#include <ctime>   
+
+#include <tuple>
+#include <iostream>
 
 
-class TreeClass
-{
-public:
-    TreeClass() {}
-    string colorHexCode;
+using namespace std;
 
-    int energy = 0;
-    int age = 0;
-    int currentAge = 0;
 
-    int height = 0;
-    int width = 0;
-    int currentHeight = 0;
-    int roots = 0;
-
-    void grow();
-    void die();
-
-};
+namespace Tree{
+    class TreeClass
+    {
+        public:
+            TreeClass() {}
+        std::bitset<40> binaryArray;
+        int PosX;
+        int PosY;
+        int idTree;
+    };
+}
 
 #endif // MAIN_H

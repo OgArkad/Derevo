@@ -15,7 +15,21 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="4" column="1">
+    <item row="1" column="1">
+     <widget class="QPushButton" name="stop">
+      <property name="text">
+       <string>Stop</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QToolButton" name="HideButton">
+      <property name="text">
+       <string>&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
      <widget class="QFrame" name="frame">
       <property name="maximumSize">
        <size>
@@ -30,44 +44,10 @@
        <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="5" column="1">
-        <widget class="QLabel" name="xSizeLabel">
-         <property name="text">
-          <string>X size</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLabel" name="treeLabel">
-         <property name="text">
-          <string>Trees:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QSpinBox" name="ySize"/>
-       </item>
-       <item row="5" column="2">
-        <widget class="QSpinBox" name="xSize"/>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLineEdit" name="tickCount">
-         <property name="text">
-          <string>0</string>
-         </property>
-        </widget>
-       </item>
        <item row="6" column="1">
         <widget class="QLabel" name="ySizeLabel">
          <property name="text">
           <string>Y size</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="tick">
-         <property name="text">
-          <string>Tick: </string>
          </property>
         </widget>
        </item>
@@ -91,6 +71,11 @@
          </item>
          <item>
           <property name="text">
+           <string>Night</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>Monochrome</string>
           </property>
          </item>
@@ -101,35 +86,22 @@
          </item>
         </widget>
        </item>
-       <item row="12" column="1">
-        <widget class="QLabel" name="uiTypeLabel">
+       <item row="5" column="1">
+        <widget class="QLabel" name="xSizeLabel">
          <property name="text">
-          <string>UI style:</string>
+          <string>X size</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="2">
-        <widget class="QLCDNumber" name="treeNumber">
-         <property name="minimumSize">
-          <size>
-           <width>117</width>
-           <height>0</height>
-          </size>
+       <item row="6" column="2">
+        <widget class="QSpinBox" name="ySize"/>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="tickCount">
+         <property name="text">
+          <string>0</string>
          </property>
         </widget>
-       </item>
-       <item row="6" column="0">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item row="13" column="2">
         <spacer name="verticalSpacer">
@@ -144,15 +116,58 @@
          </property>
         </spacer>
        </item>
+       <item row="12" column="1">
+        <widget class="QLabel" name="uiTypeLabel">
+         <property name="text">
+          <string>UI style:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="tick">
+         <property name="text">
+          <string>Tick: </string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="treeLabel">
+         <property name="text">
+          <string>Trees:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QLCDNumber" name="treeNumber">
+         <property name="minimumSize">
+          <size>
+           <width>117</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QSpinBox" name="xSize"/>
+       </item>
+       <item row="6" column="0">
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QToolButton" name="HideButton">
-      <property name="text">
-       <string>&gt;</string>
-      </property>
-     </widget>
+    <item row="0" column="0" rowspan="5">
+     <widget class="QTableWidget" name="table"/>
     </item>
     <item row="0" column="1">
      <widget class="QPushButton" name="start">
@@ -161,22 +176,12 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="5">
-     <widget class="QTableWidget" name="table"/>
-    </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="stop">
-      <property name="text">
-       <string>Stop</string>
-      </property>
-     </widget>
-    </item>
    </layout>
    <zorder>table</zorder>
    <zorder>stop</zorder>
-   <zorder>frame</zorder>
    <zorder>start</zorder>
    <zorder>HideButton</zorder>
+   <zorder>frame</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

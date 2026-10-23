@@ -1,25 +1,34 @@
 #include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <tuple>
+#include <QApplication>
 #include "main.h"
+#include "mainwindow.h" 
 
-int main() {
-    int x = 5;
-    --x; // Decrement x by 1
-    std::cout << x << "\n"; // 4
-    
-    return 0;
-}
+using namespace std;
+
 int tick;
 int x;
 int y;
+vector<vector<int8_t>> matrix(64, vector<int8_t>(128, 0));
 
-vector<vector<int8_t>> matrix;
+namespace Tree{
+    int tick;
+    int x;
+    int y;
 
     void TreeClass::grow() {
         if (this->height != this->currentHeight)
         {
             this->currentHeight++;
+            if (get<1>(this->root) > 0)
+                get<1>(this->root)--;
+            matrix[get<1>(this->root)][get<0>(this->root)] = 1;
         }
         this->currentAge++;
+        cout << "grown " << get<1>(this->root) << endl;
     }
 
     void TreeClass::die(){
@@ -27,72 +36,46 @@ vector<vector<int8_t>> matrix;
         {
             for (size_t z = 0; z < matrix[i].size(); z++)
             {
-                if (matrix[i][z] == 1)
-                {
-                    matrix[i][z] = 0;
-                }
+                if (matrix[i][z] == 1) matrix[i][z] = 0;
             }
         }
     }
+}
 
-
+using namespace Tree;
+vector<TreeClass> trees(5);
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    matrix.assign(64, vector<int8_t>(128, 0));
     MainWindow w;
     w.show();
     tick = w.tick;
     x = w.x;
     y = w.y;
 
-
-    TreeClass tree1;
-    tree1.colorHexCode = "#239212";
-    tree1.height = 8;
-    tree1.width = 4;
-
-    int rows = 3;
-    int cols = 4;
-
-    /*for (size_t i = 0; i < y; i++)
+    for (int i = 0; i < trees.size(); i++)
     {
-        for (size_t z = 0; z < x; z++)
-        {
-            cout << to_string(matrix[i][z]);
-        }
-        cout << "\n";
-    }*/
-
-    cout << "\nDone" << endl;
+        trees[i].height = 8;
+        trees[i].width = 4;
+    }
 
     srand(time(NULL));
-    for (size_t i = 0; i < 5; i++)
+    int randomNum = -1;
+    for (size_t i = 0; i < trees.size(); i++)
     {
-        int randomNum = rand() % 125;
-        cout << randomNum << " ";
-        for (size_t i = 0; i < 64; i++)
-        {
-            matrix[i][randomNum] = 1;
-        }
+        int t = rand() % x;
+        while(t == randomNum) t = rand() % (x - 1);
+        randomNum = t;
+        trees[i].root = tuple(randomNum, y - 1);
+        matrix[y - 1][randomNum] = 1;
     }
-    cout << "\n";
 
-    /*for (size_t i = 0; i < y; i++)
+    for (int i = 0; i < trees.size(); i++)
     {
-        for (size_t z = 0; z < x; z++)
-        {
-            cout << to_string(matrix[i][z]);
-        }
-         cout << "\n";
-    }*/
-
-    tree1.grow();
-    w.trees++;
-
-    //tree1.die();
-    //w.trees--;
+        trees[i].grow();
+    }
+    w.tick++;
 
     return a.exec();
 }
