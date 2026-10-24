@@ -30,9 +30,9 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::stepTick(){
     ui->tickCount->setText(QString::number(tick));
     ui->treeNumber->display((int)trees.size());//crazy convertálás...
-    for (int i = 0; i < trees.size(); ++i) {
+    /*for (int i = 0; i < trees.size(); ++i) {
         trees[i].grow();
-    }
+    }*/
     renderer->renderMap(x, y, theme, matrix);
     tick++;
 }
@@ -81,6 +81,7 @@ void MainWindow::on_tickCount_editingFinished()
         cout << "You must give a nuumber in this field, that is greater, or equals to 0. Your number: " + t << endl;
     }
     tick = t;
+    if (t = 0) Tree::reset();
 }
 
 void MainWindow::resizeVectorMatrix(){
