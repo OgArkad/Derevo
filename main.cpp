@@ -1,17 +1,10 @@
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
-#include <tuple>
-#include <QApplication>
 #include "main.h"
-#include "mainwindow.h" 
+#include "mainwindow.h"
+//inkább a .h (itt main.h) ban includolj, így átláthatóbb, és azért vannak a header fájlok...
 
 using namespace std;
 
-int tick;
-int x;
-int y;
+
 vector<vector<int8_t>> matrix(64, vector<int8_t>(128, 0));
 
 namespace Tree{
@@ -49,36 +42,27 @@ namespace Tree{
 }
 
 using namespace Tree;
-vector<TreeClass> trees(5);
+vector<TreeClass> trees(5);//le lesz cserélve
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-    //tick = w.tick;
-    //x = w.x;
-    //y = w.y;
-
-    /*for (int i = 0; i < trees.size(); i++)
-    {
-        trees[i].height = 8;
-        trees[i].width = 4;
-    }*/
-
     srand(time(NULL));
-    int randomNum = -1;
-    /*for (size_t i = 0; i < trees.size(); i++)
+    LinkedList<TreeClass> tre;
+
+    for (int i = 0; i <= trees.size(); i++)
     {
-        int t = rand() % (x-1);
-        while(t == randomNum) t = rand() % (x - 1);
-        randomNum = t;
-        trees[i].root = tuple(randomNum, y - 1);
-        matrix[y - 1][randomNum] = 1;
-    }*/
+        tre.Push(TreeClass());
+        tre.Peek().idTree = i;
+        tre.PeekAt(i).posY = y - 1;
+        //tre.PeekAt(i).posX = (int)(rand() % x);
+    }
 
     //tree1.die();
     //w.trees = 0;
+    cout << std::to_string(tre.Peek().idTree) << endl;
 
     return a.exec();
 }

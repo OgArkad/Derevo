@@ -27,10 +27,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
     int x = 128;
     int y = 64;
     int tick = 0;
+
 
 private slots:
     void stepTick();

@@ -9,6 +9,9 @@
 #include <tuple>
 #include <iostream>
 #include <bitset>
+#include <vector>
+#include <cstdlib>
+#include "linkedlist.h"
 
 namespace Tree{
     class TreeClass
@@ -16,8 +19,8 @@ namespace Tree{
         public:
             TreeClass() {}
             std::bitset<40> binaryArray;
-            int PosX;
-            int PosY;
+            int posX;
+            int posY;
             int idTree;
             //void grow();
             //void die();

@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->ySize->setMaximum(128);
     ui->ySize->setValue(64);
     ui->ySize->setMinimum(3);
-    renderer->initTable(x, y, theme);
+    renderer->initTable(x, y, MainWindow::theme);
 
     this->adjustSize();
 
@@ -43,7 +43,7 @@ MainWindow::~MainWindow() {
 }
 
 
-#pragma region Event handlers
+#pragma region event handlers
 
 
 void MainWindow::on_start_clicked()
@@ -100,10 +100,10 @@ void MainWindow::resizeVectorMatrix(){
     int offyt = 0;
 
     if (oy < y){
-        offy = y - min(oy, y);
-        offyt = ox - min(ox, x);
+        offy = y - std::min(oy, y);
+        offyt = ox - std::min(ox, x);
     }else{
-        offyt = max(0, oy - y);
+        offyt = std::max(0, oy - y);
     }
 
     const int mx = matrix[0].size();

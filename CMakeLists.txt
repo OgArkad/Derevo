@@ -12,14 +12,12 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 qt_add_executable(Derevo
-    main.cpp
-    main.h
-    mainwindow.cpp
-    mainwindow.h
+    main.h main.cpp
+    mainwindow.h mainwindow.cpp
     mainwindow.ui
-    render.cpp
-    render.h
+    render.h render.cpp
     resources.qrc
+    linkedlist.h linkedlist.tpp
 )
 
 target_link_libraries(Derevo PRIVATE Qt6::Widgets)
