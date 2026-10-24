@@ -25,6 +25,7 @@ void LinkedList<T>::Item::create(T value)
     this->right = item;
 }
 
+
 template <typename T>
 T LinkedList<T>::Item::deleteItem()
 {
@@ -40,6 +41,8 @@ T LinkedList<T>::Item::deleteItem()
     return res;
 }
 
+/// @brief Removes every item from the lin ked list
+/// @tparam T
 template <typename T>
 void LinkedList<T>::Clear()
 {
@@ -59,6 +62,9 @@ void LinkedList<T>::Clear()
     count = 0;
 }
 
+/// @brief Adds/Appends the given value to the linked list. Push on the top of the "stack"
+/// @tparam T
+/// @param val the value to push on the top of the "stack"
 template <typename T>
 void LinkedList<T>::Push(T val)
 {
@@ -66,6 +72,9 @@ void LinkedList<T>::Push(T val)
     count++;
 }
 
+/// @brief Removes the item that is on the top of the "stack"
+/// @tparam T
+/// @return the top items value
 template <typename T>
 T LinkedList<T>::Pop()
 {
@@ -74,6 +83,9 @@ T LinkedList<T>::Pop()
     return this->head->left->deleteItem();
 }
 
+/// @brief Gives you the value of the item on the top of this "stack"
+/// @tparam T
+/// @return the value of the top item
 template <typename T>
 T& LinkedList<T>::Peek()
 {
@@ -81,6 +93,10 @@ T& LinkedList<T>::Peek()
     return this->head->left->value;
 }
 
+/// @brief Gives the items value at the given index
+/// @tparam T
+/// @param index
+/// @return the value of the item
 template <typename T>
 T& LinkedList<T>::PeekAt(int index)
 {
@@ -98,6 +114,10 @@ T& LinkedList<T>::PeekAt(int index)
     return current->value;
 }
 
+/// @brief Removes the item, at the given index
+/// @tparam T
+/// @param index
+/// @return the removed items value
 template <typename T>
 T LinkedList<T>::RemoveAt(int index)
 {
@@ -117,6 +137,10 @@ T LinkedList<T>::RemoveAt(int index)
     return current->Remove();
 }
 
+/// @brief Returns the count of the elements that accomplish the functions statement
+/// @tparam T
+/// @param pred recives the T type value, has to return bool
+/// @return the count of the elements that accomplish the functions statement
 template <typename T>
 int LinkedList<T>::Count(std::function<bool(const T&)> pred)
 {
@@ -130,6 +154,10 @@ int LinkedList<T>::Count(std::function<bool(const T&)> pred)
     return c;
 }
 
+/// @brief Finds the first element that accomplishes the functions statement
+/// @tparam T
+/// @param p recives the T type value, has to return bool
+/// @return the first element that accomplishes the functions statement
 template <typename T>
 T& LinkedList<T>::First(std::function<bool(const T&)> predicate)
 {
@@ -141,6 +169,10 @@ T& LinkedList<T>::First(std::function<bool(const T&)> predicate)
     return c->value;
 }
 
+/// @brief Finds the index of the first element that accomplishes the functions statement
+/// @tparam T
+/// @param p recives the T type value, has to return bool
+/// @return the index of the first element that accomplishes the functions statement
 template <typename T>
 int LinkedList<T>::FindIndex(std::function<bool(const T&)> p)
 {

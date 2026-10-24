@@ -25,8 +25,8 @@ namespace Tree{
             //void grow();
             //void die();
     };
-
     void reset();
+    void step();
 }
 
 #endif // MAIN_H

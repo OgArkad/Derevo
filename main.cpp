@@ -34,15 +34,25 @@ namespace Tree{
         }
     }*/
 
+    void step() {}
+
     void reset(){
         tick = 0;
         matrix.assign(y, vector<int8_t>(x, 0));
-        trees.assign(trees.size(), TreeClass());
+        const int c = trees.count;
+        trees.Clear();
+        for (int i = 0; i <= c; i++)
+        {
+            trees.Push(TreeClass());
+            trees.Peek().idTree = i;
+            trees.PeekAt(i).posY = y - 1;
+            //tre.PeekAt(i).posX = (int)(rand() % x);
+        }
     }
 }
 
 using namespace Tree;
-vector<TreeClass> trees(5);//le lesz cserélve
+LinkedList<TreeClass> trees;//le lesz cserélve
 
 int main(int argc, char *argv[])
 {
@@ -52,7 +62,7 @@ int main(int argc, char *argv[])
     srand(time(NULL));
     LinkedList<TreeClass> tre;
 
-    for (int i = 0; i <= trees.size(); i++)
+    for (int i = 0; i <= 5; i++)
     {
         tre.Push(TreeClass());
         tre.Peek().idTree = i;

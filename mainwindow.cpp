@@ -29,10 +29,11 @@ MainWindow::MainWindow(QWidget *parent)
 /*                                                        ********************************                                    */
 void MainWindow::stepTick(){
     ui->tickCount->setText(QString::number(tick));
-    ui->treeNumber->display((int)trees.size());//crazy convertálás...
+    ui->treeNumber->display((int)trees.count);//crazy convertálás...
     /*for (int i = 0; i < trees.size(); ++i) {
         trees[i].grow();
     }*/
+    Tree::step();
     renderer->renderMap(x, y, theme, matrix);
     tick++;
 }

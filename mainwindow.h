@@ -10,8 +10,8 @@ class QTableWidgetItem;
 
 using namespace std;
 
-extern vector<vector<int8_t>> matrix;//valamiért itt kell deklarálni
-extern vector<Tree::TreeClass> trees;
+extern vector<vector<int8_t>> matrix;
+extern LinkedList<Tree::TreeClass> trees;
 
 
 QT_BEGIN_NAMESPACE
