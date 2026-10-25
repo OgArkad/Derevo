@@ -1,9 +1,16 @@
 #include "render.h"
 #include "ui_mainwindow.h"
 
+/// @brief This class contains the table's important functions
+/// @param table The table, to handle (usually ui->Table)
+/// @param wt the QMainWindow to work with
 Render::Render(QTableWidget *table, QMainWindow *wt): table(table), w(wt) {
 }//mainWindow: width, height
 
+/// @brief This should only run once. It sets up the table, sets it's properties.
+/// @param x count of columns
+/// @param y count of rows
+/// @param theme the theme to set up
 void Render::initTable(int x, int y, int8_t theme){
     table->setStyleSheet("");
 
@@ -26,7 +33,7 @@ void Render::initTable(int x, int y, int8_t theme){
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     table->verticalHeader()->setMinimumSectionSize(size);
     table->verticalHeader()->setDefaultSectionSize(size);
-    cout << "Size: " << size << endl;
+    std::cout << "Size: " << size << std::endl;
 
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     table->horizontalHeader()->setMinimumSectionSize(size);
@@ -42,6 +49,10 @@ void Render::initTable(int x, int y, int8_t theme){
     setTable(x, y, theme);
 }
 
+/// @brief Resizes the table, and recolors it
+/// @param x count of columns
+/// @param y count of rows
+/// @param theme the theme to set up
 void Render::setTable(int x, int y, int8_t theme){
     table->setColumnCount(x);
     table->setRowCount(y);
@@ -56,7 +67,12 @@ void Render::setTable(int x, int y, int8_t theme){
     table->setFixedSize(0.8 * w->width(), 0.8 * w->height());
 }
 
-void Render::renderMap(int x, int y, int8_t theme, const vector<vector<int8_t>>& matrix){
+/// @brief Renders the whole rable/map
+/// @param x count of columns
+/// @param y count of rows
+/// @param theme the theme to set up
+/// @param matrix the matrix, on with it is based
+void Render::renderMap(int x, int y, int8_t theme, const std::vector<std::vector<int8_t>>& matrix){
     for (int i = 0; i < y; i++) {
         for (int j = 0; j < x; j++) {
             if (!table->item(i, j)) table->setItem(i, j, new QTableWidgetItem());
@@ -66,6 +82,11 @@ void Render::renderMap(int x, int y, int8_t theme, const vector<vector<int8_t>>&
     }
 }
 
+
+/// @brief Sets a cell's value, and color
+/// @param item the table cell
+/// @param val the value that shoul be written in the cell you probably want to set it to 0 or 1
+/// @param theme a theme from 0-4
 void Render::applyTheme(QTableWidgetItem *item, int8_t val, int8_t theme){
     if (item == nullptr) return;
     item->setText(QString::number(val));
@@ -111,6 +132,6 @@ void Render::applyTheme(QTableWidgetItem *item, int8_t val, int8_t theme){
         item->setForeground(QBrush(QColor("#FF0000")));
         break;
     default:
-        throw new range_error("Unexpected theme: " + theme);
+        throw new std::range_error("Unexpected theme: " + theme);
     }
 }

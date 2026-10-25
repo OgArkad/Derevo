@@ -1,10 +1,8 @@
-#include <iostream>
-#include <vector>
 #include <string>
 #include <span>
 #include "main.h"
 
-using namespace std;
+//using namespace std;
 
 struct grow
 {
@@ -14,8 +12,7 @@ struct grow
 };
 
 int grow(const TreeClass& tree) {
-    
-    std::span<const int8_t> slice(tree.genome.data() + 24, 35); 
+    std::span<const int8_t> slice(tree.genome.data() + 24, 35);
 
     return 0;
 }

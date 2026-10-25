@@ -10,14 +10,15 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+set(APP_ICON_RESOURCE "${CMAKE_CURRENT_SOURCE_DIR}/resources.qrc")
 
 qt_add_executable(Derevo
-    main.h main.cpp
-    mainwindow.h mainwindow.cpp
+    main.h  main.cpp
+    mainwindow.h    mainwindow.cpp ${APP_ICON_RESOURCE}
     mainwindow.ui
-    render.h render.cpp
+    render.h    render.cpp
     resources.qrc
-    linkedlist.h linkedlist.tpp
+    linkedlist.h    linkedlist.tpp
 )
 
 target_link_libraries(Derevo PRIVATE Qt6::Widgets)

@@ -5,8 +5,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    setWindowIcon(QIcon(":/appicon.ico"));//fél siker
     ui->setupUi(this);
+    setWindowIcon(QIcon(":/appicon.ico"));//fél siker
 
     renderer = new Render(ui->table, this);
 
@@ -27,12 +27,10 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 /*                                                        ********************************                                    */
+
 void MainWindow::stepTick(){
     ui->tickCount->setText(QString::number(tick));
     ui->treeNumber->display((int)trees.count);//crazy convertálás...
-    /*for (int i = 0; i < trees.size(); ++i) {
-        trees[i].grow();
-    }*/
     Tree::step();
     renderer->renderMap(x, y, theme, matrix);
     tick++;
@@ -85,6 +83,7 @@ void MainWindow::on_tickCount_editingFinished()
     if (t = 0) Tree::reset();
 }
 
+/// @brief Resizes the main matrix, to the current x, y
 void MainWindow::resizeVectorMatrix(){
     vector<vector<int8_t>> vec(y, vector<int8_t>(x, 0));
     if (matrix.size() <= 2)

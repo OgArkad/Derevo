@@ -6,7 +6,7 @@
 #include <QApplication>
 #include <ctime>
 
-#include <tuple>
+//#include <tuple>
 #include <iostream>
 #include <bitset>
 #include <vector>
@@ -22,8 +22,6 @@ namespace Tree{
             int posX;
             int posY;
             int idTree;
-            //void grow();
-            //void die();
     };
     void reset();
     void step();

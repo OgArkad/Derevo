@@ -8,14 +8,12 @@
 #include <iostream>
 //#include <vector>
 
-using namespace std;
-
 class Render
 {
 public:
     explicit Render(QTableWidget *table, QMainWindow *w);
     void initTable(int x, int y, int8_t theme);
-    void renderMap(int x, int y, int8_t theme, const vector<vector<int8_t>>& matrix);
+    void renderMap(int x, int y, int8_t theme, const std::vector<std::vector<int8_t>>& matrix);
     void setTable(int x, int y, int8_t theme);
     void applyTheme(QTableWidgetItem *item, int8_t val,  int8_t theme);
 

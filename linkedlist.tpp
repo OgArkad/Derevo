@@ -1,5 +1,4 @@
 #include "linkedlist.h"
-#include <stdexcept>
 
 template <typename T>
 LinkedList<T>::LinkedList()
