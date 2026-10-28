@@ -3,7 +3,6 @@
 *.excalidraw
 *.vs
 *.vscode
-.vscode/
 
 *~
 *.autosave
@@ -42,6 +41,7 @@ Thumbs.db
 # qtcreator generated files
 *.pro.user*
 *.qbs.user*
+*.json.user*
 CMakeLists.txt.user*
 
 # xemacs temporary files
@@ -56,6 +56,7 @@ CMakeLists.txt.user*
 *.ilk
 *.pdb
 *.sln
+*.slnx
 *.suo
 *.vcproj
 *vcproj.*.*.user

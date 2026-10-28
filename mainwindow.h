@@ -3,6 +3,14 @@
 #include <QTimer>
 #include <QIcon>
 
+#include <QPalette>
+#include <QColor>
+
+#include <QGuiApplication>
+#include <QSizePolicy>
+#include <QSize>
+#include <QStyleHints>
+
 #include "render.h"
 #include "main.h"//piszkosul circular-dependency
 

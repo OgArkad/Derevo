@@ -3,15 +3,17 @@
 
 //using namespace std; //apparently this is not too safe, when working whith lot's of imports...
 
-std::vector<std::vector<int8_t>> matrix(64, std::vector<int8_t>(128, 0));
+std::vector<std::vector<int8_t>> matrix(64, std::vector<int8_t>(128, 0)); //the main matrix (the map)
 
 namespace Tree{
     int tick;
     int x;
     int y;
 
+    /// @brief Everything that should be called in the main loop, will go here.
     void step() {}
 
+    /// @brief Reset's the main matrix, clears the tree list, sets tick to 0.
     void reset(){
         tick = 0;
         matrix.assign(y, std::vector<int8_t>(x, 0));
@@ -51,8 +53,8 @@ int main(int argc, char *argv[])
     {
         trees.Push(Tree::TreeClass());
         trees.Peek().idTree = i;
-        trees.PeekAt(i).posY = Tree::y - 1;
-        trees.PeekAt(i).posX = (int)(rand() % Tree::x); //eddig nem működött...
+        trees.Peek().posY = Tree::y - 1; //itt a PeekAt(i) is működne, de ez így optimálisabb
+        trees.Peek().posX = (int)(rand() % Tree::x); //eddig nem működött...
     }
     std::cout << std::to_string(trees.Peek().idTree) << std::endl;
 

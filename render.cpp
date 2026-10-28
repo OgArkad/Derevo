@@ -12,23 +12,9 @@ Render::Render(QTableWidget *table, QMainWindow *wt): table(table), w(wt) {
 /// @param y count of rows
 /// @param theme the theme to set up
 void Render::initTable(int x, int y, int8_t theme){
-    table->setStyleSheet("");
+    table->setContentsMargins(0, 0, 0, 0);
 
-    table->verticalHeader()->hide();
-    table->horizontalHeader()->hide();
-
-    table->setShowGrid(false);
-    table->setFrameShape(QFrame::NoFrame);
-    table->setLineWidth(0);
-    table->setMidLineWidth(0);
-
-
-    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    table->setFocusPolicy(Qt::NoFocus);
-    table->setSelectionMode(QAbstractItemView::NoSelection);
-
-
-    const int size = (w->size().width()/x) * 0.9999;
+    const int size = w->width()/x;
 
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     table->verticalHeader()->setMinimumSectionSize(size);
@@ -39,7 +25,7 @@ void Render::initTable(int x, int y, int8_t theme){
     table->horizontalHeader()->setMinimumSectionSize(size);
     table->horizontalHeader()->setDefaultSectionSize(size);
 
-    table->resize(x* size, y* size);
+    table->setFixedSize(x * size, y * size);
 
     QFont font("monospace");
     font.setStyleHint(QFont::Monospace);
@@ -60,6 +46,7 @@ void Render::setTable(int x, int y, int8_t theme){
     for (int i = 0; i < y; ++i) {
         for (int j = 0; j < x; ++j) {
             if (!table->item(i, j)) table->setItem(i, j, new QTableWidgetItem());
+
             this->applyTheme(table->item(i, j), 0, theme);
         }
     }
@@ -67,21 +54,20 @@ void Render::setTable(int x, int y, int8_t theme){
     table->setFixedSize(0.8 * w->width(), 0.8 * w->height());
 }
 
-/// @brief Renders the whole rable/map
+/// @brief Renders the whole table/map
 /// @param x count of columns
 /// @param y count of rows
 /// @param theme the theme to set up
-/// @param matrix the matrix, on with it is based
+/// @param matrix the matrix, on wich it is based
 void Render::renderMap(int x, int y, int8_t theme, const std::vector<std::vector<int8_t>>& matrix){
     for (int i = 0; i < y; i++) {
         for (int j = 0; j < x; j++) {
-            if (!table->item(i, j)) table->setItem(i, j, new QTableWidgetItem());
+            if (!table->item(i, j)) table->setItem(i, j, new QTableWidgetItem("0", 0));
             if (i < matrix.size() && matrix.size() >= 1 && matrix[0].size() > j) applyTheme(table->item(i, j), matrix[i][j], theme);
             else applyTheme(table->item(i, j), 0, theme);
         }
     }
 }
-
 
 /// @brief Sets a cell's value, and color
 /// @param item the table cell

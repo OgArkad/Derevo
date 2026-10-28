@@ -6,82 +6,37 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setWindowIcon(QIcon(":/appicon.ico"));//fél siker
+    //this->setWindowIcon(QIcon(":/appicon.ico"));//fél siker
 
+    ui->menubar->hide();//menubar will be removed
     renderer = new Render(ui->table, this);
 
-    ui->xSize->setMaximum(256);
-    ui->xSize->setValue(128);
-    ui->xSize->setMinimum(3);
-
-    ui->ySize->setMaximum(128);
-    ui->ySize->setValue(64);
-    ui->ySize->setMinimum(3);
     renderer->initTable(x, y, MainWindow::theme);
 
-    this->adjustSize();
+    if (!QGuiApplication::platformName().contains("wayland") ||  windowFlags().testFlag(Qt::WindowStaysOnTopHint))
+        this->adjustSize();
 
     timer = new QTimer(this);
-
     connect(timer, &QTimer::timeout, this, &MainWindow::stepTick);
 }
-
-/*                                                        ********************************                                    */
-
-void MainWindow::stepTick(){
-    ui->tickCount->setText(QString::number(tick));
-    ui->treeNumber->display((int)trees.count);//crazy convertálás...
-    Tree::step();
-    renderer->renderMap(x, y, theme, matrix);
-    tick++;
-}
-
 
 MainWindow::~MainWindow() {
     delete ui;
 }
 
+#pragma region stepTick
 
-#pragma region event handlers
+/*                                                        ********************************                                    */
 
-
-void MainWindow::on_start_clicked()
-{
-    playing = true;
-    timer->start(250);
-
-    ui->start->setAutoFillBackground(true);//works on windows
-    QPalette palette = ui->start->palette();
-    palette.setColor(QPalette::Window, QColor(Qt::blue));
-    ui->start->setPalette(palette);
-    ui->start->show();
+void MainWindow::stepTick(){
+    ui->tickCount->setText(QString::number(tick));
+    ui->treeNumber->display(QString::number(trees.count));//így vagy az (int)... -el optimmálisabb vajon?
+    Tree::step();
+    renderer->renderMap(x, y, theme, matrix);
+    tick++;
 }
 
-
-void MainWindow::on_stop_clicked()
-{
-    playing = false;
-    timer->stop();
-
-    ui->start->setAutoFillBackground(true);
-    QPalette palette = ui->start->palette();
-    palette.setColor(QPalette::Window, QColor(Qt::black));
-    ui->start->setPalette(palette);
-    ui->start->show();
-}
-
-
-void MainWindow::on_tickCount_editingFinished()
-{
-    bool ok;
-    int t = ui->tickCount->text().toInt(&ok);
-    if (t < 0 || !ok){
-        ui->tickCount->setText(0);
-        cout << "You must give a nuumber in this field, that is greater, or equals to 0. Your number: " + t << endl;
-    }
-    tick = t;
-    if (t = 0) Tree::reset();
-}
+#pragma endregion
 
 /// @brief Resizes the main matrix, to the current x, y
 void MainWindow::resizeVectorMatrix(){
@@ -89,6 +44,7 @@ void MainWindow::resizeVectorMatrix(){
     if (matrix.size() <= 2)
     {
         matrix = vec;
+        renderer->renderMap(x, y, theme, matrix);
         ui->table->resize(x* (size().width()/x) * 0.9999, y* (size().width()/x) * 0.9999);
         return;
     }
@@ -118,6 +74,58 @@ void MainWindow::resizeVectorMatrix(){
     ui->table->resize(x* (size().width()/x) * 0.9999, y* (size().width()/x) * 0.9999);
 }
 
+// Source - https://stackoverflow.com/a/78854851
+// Posted by Nick Bolton
+// Retrieved 2026-10-27, License - CC BY-SA 4.0
+inline bool isDarkMode() {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 5, 0)
+  const Qt::ColorScheme scheme = QGuiApplication::styleHints()->colorScheme();
+  return scheme == Qt::ColorScheme::Dark;
+#else
+  const QPalette defaultPalette;
+  const QColor text = defaultPalette.color(QPalette::WindowText);
+  const QColor window = defaultPalette.color(QPalette::Window);
+  return text.lightness() > window.lightness();
+#endif // QT_VERSION
+}
+
+#pragma region event handlers
+
+void MainWindow::on_start_clicked()
+{
+    if (playing) return;
+    playing = true;
+    timer->start(250);
+
+    if (isDarkMode())
+        ui->start->setStyleSheet("background-color: rgb(20, 20, 145);");
+    else
+        ui->start->setStyleSheet("background-color: rgb(110, 110, 255);");
+}
+
+
+void MainWindow::on_stop_clicked()
+{
+    if (!playing) return;
+    playing = false;
+    timer->stop();
+
+    ui->start->setStyleSheet("");
+}
+
+
+void MainWindow::on_tickCount_editingFinished()
+{
+    bool ok;
+    int t = ui->tickCount->text().toInt(&ok);
+    if (t < 0 || !ok){
+        ui->tickCount->setText(0);
+        cout << "You must give a number in this field, that is greater, or equals to 0. Your number: " + t << endl;
+    }
+    tick = t;
+    if (t = 0) Tree::reset();
+}
+
 
 void MainWindow::on_xSize_editingFinished()
 {
@@ -125,6 +133,8 @@ void MainWindow::on_xSize_editingFinished()
     renderer->setTable(x, y, theme);
     if (matrix.size() != x)
         resizeVectorMatrix();
+    if (!QGuiApplication::platformName().contains("wayland") ||  windowFlags().testFlag(Qt::WindowStaysOnTopHint))
+        adjustSize();
 }
 
 
@@ -134,6 +144,8 @@ void MainWindow::on_ySize_editingFinished()
     renderer->setTable(x, y, theme);
     if (matrix.size() > 0 && matrix[0].size() != y)
         resizeVectorMatrix();
+    if (!QGuiApplication::platformName().contains("wayland") ||  windowFlags().testFlag(Qt::WindowStaysOnTopHint))
+        adjustSize();
 }
 
 
