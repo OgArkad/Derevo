@@ -4,7 +4,7 @@
 /// @brief This class contains the table's important functions
 /// @param table The table, to handle (usually ui->Table)
 /// @param wt the QMainWindow to work with
-Render::Render(QTableWidget *table, QMainWindow *wt): table(table), w(wt) {
+Render::Render(QTableWidget *table, QMainWindow *wt, int& x, int& y, int8_t& theme): table(table), w(wt),  x(x), y(y), theme(theme) {
 }//mainWindow: width, height
 
 /// @brief This should only run once. It sets up the table, sets it's properties.
@@ -14,40 +14,55 @@ Render::Render(QTableWidget *table, QMainWindow *wt): table(table), w(wt) {
 void Render::initTable(int x, int y, int8_t theme){
     table->setContentsMargins(0, 0, 0, 0);
 
-    const int size = w->width()/x;
+    setTable();
 
-    table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-    table->verticalHeader()->setMinimumSectionSize(size);
-    table->verticalHeader()->setDefaultSectionSize(size);
-    std::cout << "Size: " << size << std::endl;
-
+    table->horizontalHeader()->setMinimumSectionSize(1);
+    table->verticalHeader()->setMinimumSectionSize(1);
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-    table->horizontalHeader()->setMinimumSectionSize(size);
-    table->horizontalHeader()->setDefaultSectionSize(size);
-
-    table->setFixedSize(x * size, y * size);
+    table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 
     QFont font("monospace");
     font.setStyleHint(QFont::Monospace);
-    font.setPixelSize(size * 0.85);
+    font.setPixelSize(5);
     table->setFont(font);
 
-    setTable(x, y, theme);
+    resizeTable();
+}
+
+
+void Render::resizeTable()
+{
+    if (x <= 0 || y <= 0 || !table || !w || !w->centralWidget()) return;
+
+    const QSize available = table->size();
+    const int cellSize = std::min(available.width()  / x,
+                                  available.height() / y);
+
+    if (cellSize <= 0) return;
+
+    table->horizontalHeader()->setDefaultSectionSize(cellSize);
+    table->verticalHeader()->setDefaultSectionSize(cellSize);
+    for (int i = 0; i < x; i++) table->setColumnWidth(i, cellSize);
+    for (int i = 0; i < y; i++) table->setRowHeight(i, cellSize);
+
+    QFont font("monospace");
+    font.setStyleHint(QFont::Monospace);
+    font.setPixelSize(std::max(1, static_cast<int>(cellSize * 0.8)));
+    table->setFont(font);
 }
 
 /// @brief Resizes the table, and recolors it
 /// @param x count of columns
 /// @param y count of rows
 /// @param theme the theme to set up
-void Render::setTable(int x, int y, int8_t theme){
+void Render::setTable(){
     table->setColumnCount(x);
     table->setRowCount(y);
 
     for (int i = 0; i < y; ++i) {
         for (int j = 0; j < x; ++j) {
             if (!table->item(i, j)) table->setItem(i, j, new QTableWidgetItem());
-
-            this->applyTheme(table->item(i, j), 0, theme);
+            this->applyTheme(table->item(i, j), 0);
         }
     }
 
@@ -59,12 +74,12 @@ void Render::setTable(int x, int y, int8_t theme){
 /// @param y count of rows
 /// @param theme the theme to set up
 /// @param matrix the matrix, on wich it is based
-void Render::renderMap(int x, int y, int8_t theme, const std::vector<std::vector<int8_t>>& matrix){
+void Render::renderMap(const std::vector<std::vector<int8_t>>& matrix){
     for (int i = 0; i < y; i++) {
         for (int j = 0; j < x; j++) {
             if (!table->item(i, j)) table->setItem(i, j, new QTableWidgetItem("0", 0));
-            if (i < matrix.size() && matrix.size() >= 1 && matrix[0].size() > j) applyTheme(table->item(i, j), matrix[i][j], theme);
-            else applyTheme(table->item(i, j), 0, theme);
+            if (i < matrix.size() && matrix.size() >= 1 && matrix[0].size() > j) applyTheme(table->item(i, j), matrix[i][j]);
+            else applyTheme(table->item(i, j), 0);
         }
     }
 }
@@ -73,7 +88,7 @@ void Render::renderMap(int x, int y, int8_t theme, const std::vector<std::vector
 /// @param item the table cell
 /// @param val the value that shoul be written in the cell you probably want to set it to 0 or 1
 /// @param theme a theme from 0-4
-void Render::applyTheme(QTableWidgetItem *item, int8_t val, int8_t theme){
+void Render::applyTheme(QTableWidgetItem *item, int8_t val){
     if (item == nullptr) return;
     item->setText(QString::number(val));
     switch(theme){

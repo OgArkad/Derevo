@@ -27,7 +27,10 @@
    <double>1.000000000000000</double>
   </property>
   <property name="locale">
-   <locale language="English" country="AmericanSamoa"/>
+   <locale language="English" country="Hungary"/>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -46,24 +49,7 @@
     <property name="spacing">
      <number>5</number>
     </property>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="stop">
-      <property name="text">
-       <string>Stop</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QToolButton" name="HideButton">
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="text">
-       <string>&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
+    <item row="4" column="2">
      <widget class="QFrame" name="frame">
       <property name="maximumSize">
        <size>
@@ -81,16 +67,51 @@
        <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="7" column="2">
+       <item row="14" column="3">
+        <widget class="QSlider" name="simSpeed">
+         <property name="cursor">
+          <cursorShape>SizeHorCursor</cursorShape>
+         </property>
+         <property name="minimum">
+          <number>10</number>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+         <property name="value">
+          <number>250</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+         <property name="invertedAppearance">
+          <bool>false</bool>
+         </property>
+         <property name="invertedControls">
+          <bool>true</bool>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TickPosition::NoTicks</enum>
+         </property>
+         <property name="tickInterval">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="tick">
+         <property name="text">
+          <string>Tick: </string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="3">
         <widget class="QLCDNumber" name="treeNumber">
          <property name="minimumSize">
           <size>
            <width>117</width>
            <height>0</height>
           </size>
-         </property>
-         <property name="locale">
-          <locale language="English" country="Hungary"/>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Shadow::Plain</enum>
@@ -109,20 +130,48 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QLabel" name="xSizeLabel">
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="tickCount">
+         <property name="cursor">
+          <cursorShape>ArrowCursor</cursorShape>
+         </property>
          <property name="text">
-          <string>X size</string>
+          <string>0</string>
+         </property>
+         <property name="maxLength">
+          <number>10</number>
+         </property>
+         <property name="placeholderText">
+          <string>0</string>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="12" column="2">
+       <item row="7" column="1">
+        <widget class="QLabel" name="ySizeLabel">
+         <property name="text">
+          <string>Y size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="3">
         <widget class="QComboBox" name="uiCombo">
          <property name="minimumSize">
           <size>
            <width>117</width>
            <height>0</height>
           </size>
+         </property>
+         <property name="whatsThis">
+          <string/>
+         </property>
+         <property name="maxVisibleItems">
+          <number>10</number>
+         </property>
+         <property name="frame">
+          <bool>true</bool>
          </property>
          <item>
           <property name="text">
@@ -151,7 +200,7 @@
          </item>
         </widget>
        </item>
-       <item row="6" column="2">
+       <item row="7" column="3">
         <widget class="QSpinBox" name="ySize">
          <property name="cursor">
           <cursorShape>ArrowCursor</cursorShape>
@@ -167,14 +216,7 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
-        <widget class="QLabel" name="treeLabel">
-         <property name="text">
-          <string>Trees:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="13" column="2">
+       <item row="17" column="3">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Orientation::Vertical</enum>
@@ -187,56 +229,28 @@
          </property>
         </spacer>
        </item>
-       <item row="12" column="1">
+       <item row="14" column="1">
+        <widget class="QLabel" name="simSpeedLabel">
+         <property name="text">
+          <string>Simulation speed:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLabel" name="treeLabel">
+         <property name="text">
+          <string>Trees:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="1">
         <widget class="QLabel" name="uiTypeLabel">
          <property name="text">
           <string>UI style:</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="tick">
-         <property name="text">
-          <string>Tick: </string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLineEdit" name="tickCount">
-         <property name="cursor">
-          <cursorShape>ArrowCursor</cursorShape>
-         </property>
-         <property name="locale">
-          <locale language="English" country="Hungary"/>
-         </property>
-         <property name="text">
-          <string>0</string>
-         </property>
-         <property name="maxLength">
-          <number>10</number>
-         </property>
-         <property name="placeholderText">
-          <string>0</string>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Orientation::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="5" column="2">
+       <item row="6" column="3">
         <widget class="QSpinBox" name="xSize">
          <property name="cursor">
           <cursorShape>ArrowCursor</cursorShape>
@@ -253,16 +267,38 @@
         </widget>
        </item>
        <item row="6" column="1">
-        <widget class="QLabel" name="ySizeLabel">
+        <widget class="QLabel" name="xSizeLabel">
          <property name="text">
-          <string>Y size</string>
+          <string>X size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QPushButton" name="reset">
+         <property name="text">
+          <string>RESET</string>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="3">
+        <widget class="QTextBrowser" name="debugElement">
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Debug info will apear here&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#55ff00;&quot;&gt;&amp;gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="5">
+    <item row="0" column="0" rowspan="6">
      <widget class="QTableWidget" name="table">
       <property name="cursor" stdset="0">
        <cursorShape>CrossCursor</cursorShape>
@@ -509,10 +545,27 @@
       <column/>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="0" column="2">
      <widget class="QPushButton" name="start">
       <property name="text">
        <string>Start</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QToolButton" name="HideButton">
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="text">
+       <string>&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QPushButton" name="stop">
+      <property name="text">
+       <string>Stop</string>
       </property>
      </widget>
     </item>
@@ -536,12 +589,19 @@
     <property name="title">
      <string>Derevo</string>
     </property>
+    <property name="icon">
+     <iconset theme="QIcon::ThemeIcon::GoHome"/>
+    </property>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
      <string>Settings</string>
     </property>
+    <property name="icon">
+     <iconset theme="QIcon::ThemeIcon::DocumentProperties"/>
+    </property>
+    <addaction name="separator"/>
    </widget>
    <addaction name="menuDerevo"/>
    <addaction name="menuSettings"/>

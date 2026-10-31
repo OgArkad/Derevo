@@ -6,10 +6,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //this->setWindowIcon(QIcon(":/appicon.ico"));//fél siker
+    this->setWindowIcon(QIcon(":/appicon.ico"));//fél siker
+    //this->setCentralWidget(ui->table);
+    appendDebug(this->centralWidget()->objectName().toStdString());
 
-    ui->menubar->hide();//menubar will be removed
-    renderer = new Render(ui->table, this);
+    //ui->menubar->hide();//menubar will be removed
+    renderer = new Render(ui->table, this, x, y, theme);
 
     renderer->initTable(x, y, MainWindow::theme);
 
@@ -20,8 +22,19 @@ MainWindow::MainWindow(QWidget *parent)
     connect(timer, &QTimer::timeout, this, &MainWindow::stepTick);
 }
 
+void MainWindow::appendDebug(std::string strg){
+    ui->debugElement->append(QString::fromStdString(strg));
+    //ui->debugElement->setTextColor(QColor::green);
+}
+
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+    QMainWindow::resizeEvent(event);
+    renderer->resizeTable();
 }
 
 #pragma region stepTick
@@ -32,7 +45,7 @@ void MainWindow::stepTick(){
     ui->tickCount->setText(QString::number(tick));
     ui->treeNumber->display(QString::number(trees.count));//így vagy az (int)... -el optimmálisabb vajon?
     Tree::step();
-    renderer->renderMap(x, y, theme, matrix);
+    renderer->renderMap(matrix);
     tick++;
 }
 
@@ -44,7 +57,7 @@ void MainWindow::resizeVectorMatrix(){
     if (matrix.size() <= 2)
     {
         matrix = vec;
-        renderer->renderMap(x, y, theme, matrix);
+        renderer->renderMap(matrix);
         ui->table->resize(x* (size().width()/x) * 0.9999, y* (size().width()/x) * 0.9999);
         return;
     }
@@ -95,7 +108,7 @@ void MainWindow::on_start_clicked()
 {
     if (playing) return;
     playing = true;
-    timer->start(250);
+    timer->start(ui->simSpeed->value());
 
     if (isDarkMode())
         ui->start->setStyleSheet("background-color: rgb(20, 20, 145);");
@@ -130,7 +143,7 @@ void MainWindow::on_tickCount_editingFinished()
 void MainWindow::on_xSize_editingFinished()
 {
     x = ui->xSize->value();
-    renderer->setTable(x, y, theme);
+    renderer->setTable();
     if (matrix.size() != x)
         resizeVectorMatrix();
     if (!QGuiApplication::platformName().contains("wayland") ||  windowFlags().testFlag(Qt::WindowStaysOnTopHint))
@@ -141,7 +154,7 @@ void MainWindow::on_xSize_editingFinished()
 void MainWindow::on_ySize_editingFinished()
 {
     y = ui->ySize->value();
-    renderer->setTable(x, y, theme);
+    renderer->setTable();
     if (matrix.size() > 0 && matrix[0].size() != y)
         resizeVectorMatrix();
     if (!QGuiApplication::platformName().contains("wayland") ||  windowFlags().testFlag(Qt::WindowStaysOnTopHint))
@@ -152,7 +165,7 @@ void MainWindow::on_ySize_editingFinished()
 void MainWindow::on_uiCombo_currentIndexChanged(int index)
 {
     theme = index;
-    renderer->renderMap(x, y, theme, matrix);
+    renderer->renderMap(matrix);
 }
 
 

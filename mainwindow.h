@@ -38,7 +38,8 @@ public:
     int x = 128;
     int y = 64;
     int tick = 0;
-
+    int8_t theme = 0;
+    void appendDebug(std::string strg);
 
 private slots:
     void stepTick();
@@ -50,12 +51,12 @@ private slots:
     void on_ySize_editingFinished();
     void on_uiCombo_currentIndexChanged(int index);
     void on_HideButton_clicked();
+    void resizeEvent(QResizeEvent* event);
 
 private:
     Ui::MainWindow *ui;
     Render * renderer = nullptr;
     bool playing = false;
     bool sidebar = true;
-    int8_t theme = 0;
     QTimer *timer;
 };

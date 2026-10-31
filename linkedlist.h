@@ -45,7 +45,7 @@ public:
     T& Peek();
     T& PeekAt(int index);
     T RemoveAt(int index);
-    int Count(std::function<bool(const T&)> pred);
+    std::size_t Count(std::function<bool(const T&)> pred);
     T& First(std::function<bool(const T&)> predicate);
     int FindIndex(std::function<bool(const T&)> p);
     std::string ToString();

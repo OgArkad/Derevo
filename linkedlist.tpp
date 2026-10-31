@@ -141,7 +141,7 @@ T LinkedList<T>::RemoveAt(int index)
 /// @param pred recives the T type value, has to return bool
 /// @return the count of the elements that accomplish the functions statement
 template <typename T>
-int LinkedList<T>::Count(std::function<bool(const T&)> pred)
+size_t LinkedList<T>::Count(std::function<bool(const T&)> pred)
 {
     Item* item = head->right;
     int c = 0;

@@ -19,6 +19,7 @@ qt_add_executable(Derevo
     render.h    render.cpp
     resources.qrc
     linkedlist.h    linkedlist.tpp
+    #grow.cpp
 )
 
 target_link_libraries(Derevo PRIVATE Qt6::Widgets)
