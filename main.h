@@ -4,27 +4,14 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <QApplication>
-#include <ctime>
 
-//#include <tuple>
-#include <iostream>
-#include <bitset>
-#include <vector>
-#include <cstdlib>
 #include "linkedlist.h"
+#include "tree.h"
+#include "mainwindow.h"
 
-namespace Tree{
-    class TreeClass
-    {
-        public:
-            TreeClass() {}
-            std::bitset<40> binaryArray;
-            int posX;
-            int posY;
-            int idTree;
-    };
-    void reset();
-    void step();
-}
+std::vector<std::vector<int8_t>> matrix(64, std::vector<int8_t>(128, 0)); //the main matrix (the map)
+#define TREES 1 //are trees for real?
+LinkedList<Tree::TreeClass> trees; //the LinkedList containing the main forest
+
 
 #endif // MAIN_H

@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <iostream>//not used
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -22,17 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
         else
             appendDebug(QString::fromStdString("An unknown error occured"));
     });
-    //addwidget: bal | addPermanentWidget: jobb
-    /*QPushButton* save = new QPushButton("Save", this);
-    ui->statusbar->addPermanentWidget(save); //this one wont be permanent, but at leat it's to the right
-    connect(save, &QPushButton::clicked, this, [this]() {
-        appendDebug(QString::fromStdString("saved to file...\n"));
-    });*/
-
-
 
     renderer = new Render(ui->table, this, x, y, theme);
-
     renderer->initTable(x, y, MainWindow::theme);
 
     if (!QGuiApplication::platformName().contains("wayland") ||  windowFlags().testFlag(Qt::WindowStaysOnTopHint))
@@ -40,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::stepTick);
-    ui->statusbar->showMessage("Welcome!", 5000);
+    ui->statusbar->showMessage("Welcome!", 10000);
 }
 
 void MainWindow::appendDebug(QString strg){

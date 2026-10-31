@@ -7,8 +7,6 @@
 #include <QColor>
 
 #include <QPixmap>
-#include <QScreen>
-#include <QGuiApplication>
 #include <QDir>
 
 #include <QGuiApplication>
