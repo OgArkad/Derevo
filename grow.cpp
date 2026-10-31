@@ -11,8 +11,8 @@ struct grow
     int third;
 };
 
-int grow(const TreeClass& tree) {
-    std::span<const int8_t> slice(tree.genome.data() + 24, 35);
+int grow(const Tree::TreeClass& tree) {
+    //span<const int8_t> slice(tree.genome.data() + 24, 35);
 
     return 0;
 }

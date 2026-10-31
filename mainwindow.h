@@ -6,10 +6,16 @@
 #include <QPalette>
 #include <QColor>
 
+#include <QPixmap>
+#include <QScreen>
+#include <QGuiApplication>
+#include <QDir>
+
 #include <QGuiApplication>
 #include <QSizePolicy>
 #include <QSize>
 #include <QStyleHints>
+#include "ui_mainwindow.h"
 
 #include "render.h"
 #include "main.h"//piszkosul circular-dependency
@@ -40,10 +46,9 @@ public:
     int tick = 0;
     int8_t theme = 0;
     void appendDebug(std::string strg);
+    void appendDebug(QString strg);
 
 private slots:
-    void stepTick();
-    void resizeVectorMatrix();
     void on_tickCount_editingFinished();
     void on_start_clicked();
     void on_stop_clicked();
@@ -53,10 +58,16 @@ private slots:
     void on_HideButton_clicked();
     void resizeEvent(QResizeEvent* event);
 
+    void on_reset_clicked();
+
+    void on_simSpeed_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     Render * renderer = nullptr;
     bool playing = false;
     bool sidebar = true;
     QTimer *timer;
+    void stepTick();
+    void resizeVectorMatrix();
 };

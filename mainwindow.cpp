@@ -1,16 +1,36 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <iostream>//not used
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     this->setWindowIcon(QIcon(":/appicon.ico"));//fél siker
-    //this->setCentralWidget(ui->table);
-    appendDebug(this->centralWidget()->objectName().toStdString());
 
-    //ui->menubar->hide();//menubar will be removed
+    QPushButton* screensh = new QPushButton("Screenshot", this);
+    ui->statusbar->addPermanentWidget(screensh);
+    connect(screensh, &QPushButton::clicked, this, [this]() {
+        QPixmap screenshot = ui->table->grab();
+        bool s = screenshot.save("myForest.png", "PNG");
+        if (s){
+            appendDebug(QString::fromStdString("saved succesfully to: "));
+            appendDebug(QDir::currentPath());
+        }
+        else
+            appendDebug(QString::fromStdString("An unknown error occured"));
+    });
+    //addwidget: bal | addPermanentWidget: jobb
+    /*QPushButton* save = new QPushButton("Save", this);
+    ui->statusbar->addPermanentWidget(save); //this one wont be permanent, but at leat it's to the right
+    connect(save, &QPushButton::clicked, this, [this]() {
+        appendDebug(QString::fromStdString("saved to file...\n"));
+    });*/
+
+
+
     renderer = new Render(ui->table, this, x, y, theme);
 
     renderer->initTable(x, y, MainWindow::theme);
@@ -20,11 +40,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::stepTick);
+    ui->statusbar->showMessage("Welcome!", 5000);
 }
 
-void MainWindow::appendDebug(std::string strg){
-    ui->debugElement->append(QString::fromStdString(strg));
-    //ui->debugElement->setTextColor(QColor::green);
+void MainWindow::appendDebug(QString strg){
+    ui->debugElement->setTextColor(QColor::fromRgb(0, 255, 0));
+    ui->debugElement->append(strg);
 }
 
 MainWindow::~MainWindow() {
@@ -182,6 +203,22 @@ void MainWindow::on_HideButton_clicked()
     sidebar = !sidebar;
     if (!QGuiApplication::platformName().contains("wayland") ||  windowFlags().testFlag(Qt::WindowStaysOnTopHint))
         this->adjustSize();
+}
+
+
+void MainWindow::on_reset_clicked()
+{
+    Tree::reset();
+    on_stop_clicked();
+    renderer->renderMap(matrix);
+    tick = 0;
+    ui->tickCount->setText(QString::number(0));
+    ui->treeNumber->display(QString::number(0));
+}
+
+void MainWindow::on_simSpeed_valueChanged(int value)
+{
+    timer->setInterval(value);
 }
 
 #pragma endregion

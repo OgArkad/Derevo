@@ -4,6 +4,9 @@
 /// @brief This class contains the table's important functions
 /// @param table The table, to handle (usually ui->Table)
 /// @param wt the QMainWindow to work with
+/// @param x count of columns
+/// @param y count of rows
+/// @param theme the theme to set up
 Render::Render(QTableWidget *table, QMainWindow *wt, int& x, int& y, int8_t& theme): table(table), w(wt),  x(x), y(y), theme(theme) {
 }//mainWindow: width, height
 
@@ -35,26 +38,34 @@ void Render::resizeTable()
     if (x <= 0 || y <= 0 || !table || !w || !w->centralWidget()) return;
 
     const QSize available = table->size();
-    const int cellSize = std::min(available.width()  / x,
+    const int size = std::min(available.width()  / x,
                                   available.height() / y);
 
-    if (cellSize <= 0) return;
+    if (size <= 0) return;
 
-    table->horizontalHeader()->setDefaultSectionSize(cellSize);
-    table->verticalHeader()->setDefaultSectionSize(cellSize);
-    for (int i = 0; i < x; i++) table->setColumnWidth(i, cellSize);
-    for (int i = 0; i < y; i++) table->setRowHeight(i, cellSize);
+    std::cout << "Cell size: " << size << std::endl;
+
+    table->horizontalHeader()->setDefaultSectionSize(size);
+    table->verticalHeader()->setDefaultSectionSize(size);
+
+    if (table->columnCount() != x || table->rowCount() != y)//this should never run, but somehow it does...
+    {
+        table->setRowCount(y);
+        table->setColumnCount(x);
+    }
+
+    for (int i = 0; i < x; i++) table->setColumnWidth(i, size);
+    for (int i = 0; i < y; i++) table->setRowHeight(i, size);
 
     QFont font("monospace");
     font.setStyleHint(QFont::Monospace);
-    font.setPixelSize(std::max(1, static_cast<int>(cellSize * 0.8)));
+    font.setPixelSize(std::max(1, static_cast<int>(size * 0.8)));
     table->setFont(font);
+
+    std::cout << "table sized!" << std::endl;
 }
 
 /// @brief Resizes the table, and recolors it
-/// @param x count of columns
-/// @param y count of rows
-/// @param theme the theme to set up
 void Render::setTable(){
     table->setColumnCount(x);
     table->setRowCount(y);

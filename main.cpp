@@ -7,7 +7,7 @@ std::vector<std::vector<int8_t>> matrix(64, std::vector<int8_t>(128, 0)); //the 
 #define TREES 1 //are trees for real?
 LinkedList<Tree::TreeClass> trees; //the LinkedList containing the main forest
 
-namespace Tree{
+namespace Tree{//ezt igazából ki kéne rakni egy külön fájlba
     int tick;
     int x;
     int y;
@@ -57,6 +57,7 @@ namespace Tree{
     void reset(){
         tick = 0;
         matrix.assign(y, std::vector<int8_t>(x, 0));
+        trees.Clear();
         #ifdef TREES //Some crazy shii is going on here
             genTrees(trees.count);
         #endif
@@ -89,7 +90,7 @@ int main(int argc, char *argv[])
     std::cout << std::to_string(trees.Peek().idTree) << std::endl;
 
     //std::cout << leavesCount(trees.Peek().posX, trees.Peek().posX) << std::endl;
-    w.appendDebug(std::to_string(leavesCount(trees.Peek().posX, trees.Peek().posX)));
-    w.appendDebug(std::to_string(trees.Peek().posX) + ", " + std::to_string(trees.Peek().posY));
+    //w.appendDebug(std::to_string(leavesCount(trees.Peek().posX, trees.Peek().posX)));
+    //w.appendDebug(std::to_string(trees.Peek().posX) + ", " + std::to_string(trees.Peek().posY));
     return a.exec();
 }
