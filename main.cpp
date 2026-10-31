@@ -1,5 +1,10 @@
 #include "main.h"
 
+std::vector<std::vector<int8_t>> matrix(64, std::vector<int8_t>(128, 0)); //the main matrix (the map)
+#define TREES 1 //are trees for real?
+LinkedList<Tree::TreeClass> trees; //the LinkedList containing the main forest
+
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
