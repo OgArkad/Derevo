@@ -28,8 +28,6 @@ void Render::initTable(int x, int y, int8_t theme){
     font.setStyleHint(QFont::Monospace);
     font.setPixelSize(5);
     table->setFont(font);
-
-    resizeTable();
 }
 
 
@@ -42,8 +40,6 @@ void Render::resizeTable()
                                   available.height() / y);
 
     if (size <= 0) return;
-
-    std::cout << "Cell size: " << size << std::endl;
 
     table->horizontalHeader()->setDefaultSectionSize(size);
     table->verticalHeader()->setDefaultSectionSize(size);
@@ -62,7 +58,7 @@ void Render::resizeTable()
     font.setPixelSize(std::max(1, static_cast<int>(size * 0.8)));
     table->setFont(font);
 
-    std::cout << "table sized!" << std::endl;
+    std::cout << "Cell size: " << size << std::endl;
 }
 
 /// @brief Resizes the table, and recolors it

@@ -46,13 +46,11 @@ template <typename T>
 void LinkedList<T>::Clear()
 {
     Item* current = head->right;
-    int i = 0;
-    while (current != head && i < INT_MAX)
+    while (current != head)
     {
         Item* next = current->right;
         delete current;
         current = next;
-        i++;
     }
 
     head->left = head;
@@ -77,7 +75,7 @@ void LinkedList<T>::Push(T val)
 template <typename T>
 T LinkedList<T>::Pop()
 {
-    if (count = 0) return T{};
+    if (count == 0) return T{};
     count--;
     return this->head->left->deleteItem();
 }

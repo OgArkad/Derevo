@@ -3,6 +3,7 @@
 
 #include <stdexcept>
 #include <functional>
+#include <climits>
 
 template <typename T>
 class LinkedList

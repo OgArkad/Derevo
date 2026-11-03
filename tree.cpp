@@ -26,23 +26,43 @@ namespace Tree{//ezt igazából ki kéne rakni egy külön fájlba
             current.posX = tx;
 
             current.binaryArray[0] = 0;
+            current.binaryArray[1] = 0;
             matrix[current.posY][current.posX] = 1;
         }
     }
 
-    void growFractal(Tree::TreeClass& tree){
-            if (tree.binaryArray[0] == 0){
-                if (tree.posY > 0)
-                    tree.posY--;
-                tree.binaryArray[0] = 1;
+
+    void growBranch(int px, int py, int direction, int length, int depth)
+    {
+        if (depth <= 0 || length <= 0) return;
+        for (int i = 0; i < length; i++)
+        {
+            if (px < 0 || px >= x || py < 0 || py >= y) return;
+            matrix[py][px] = 1;
+            if (direction == 0) // 0 = fel, 1 = jobb, 2 = bal
+                py--;
+            else if (direction == 1) {
+                rand() % 50 == 0 ? py++ : py--;
+                rand() % 50 == 0 ? px++ : px--;
             }
-            else{
-                if (tree.posX > 0)
-                    tree.posX--;
-                tree.binaryArray[0] = 0;
+            else {
+                rand() % 50 == 0 ? py++ : py--;
+                rand() % 50 == 0 ? px-- : px++;
             }
-            matrix[tree.posY][tree.posX] = 1;
         }
+        growBranch(px, py, 0, length * 0.5, depth - 1);
+        growBranch(px, py, 1, length * 0.4, depth - 1);
+        growBranch(px, py, 2, length * 0.4, depth - 1);
+    }
+    int h = 1;
+
+    void growFractal(Tree::TreeClass& tree){
+       int x = tree.binaryArray.to_ulong();
+       growBranch(tree.posX, tree.posY, 0, h, tree.binaryArray.to_ullong());
+       tree.binaryArray = x + 1;
+       if (h+1 < y*0.5) h++;
+       std::cout << tree.idTree << " : " << tree.binaryArray.to_ullong() << std::endl;
+    }
 
     /// @brief Everything that should be called in the main loop, will go here.
     void step() {
@@ -51,7 +71,7 @@ namespace Tree{//ezt igazából ki kéne rakni egy külön fájlba
             //std::cout << item.idTree << std::endl;
             /*int tx = item.grow();
             std::cout << tx << std::endl;*/
-            growFractal(trees.PeekAt(i));
+            growFractal(trees.PeekAt(i));//ezt majd cseréld le
         }
     }
 
@@ -59,11 +79,10 @@ namespace Tree{//ezt igazából ki kéne rakni egy külön fájlba
     void reset(){
         tick = 0;
         matrix.assign(y, std::vector<int8_t>(x, 0));
-        #ifdef TREES //Some crazy shii is going on here
-            const int treesCnt = trees.count
-            trees.Clear();
-            genTrees(treesCnt);
-        #endif
+        const int treesCnt = trees.count;
+        trees.Clear();
+        genTrees(treesCnt);
+
         std::cout << "game reseted" << std::endl;
     }
 }
